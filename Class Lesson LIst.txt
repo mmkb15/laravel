@@ -1,4 +1,3 @@
 30-08-2026 = route( @section, @extends), blade template
-
-
+31-08-2026 = php artisan create view, compenent creation
 

@@ -10,8 +10,12 @@ Route::get('/', function () {
 // });
 Route::get('/price', function () {
     return view('pages.price');
-})->name('pricing');
+})->name('pricing'); 
 
 Route::get('/compare', function () {
     return view('pages.compare');
 })->name('compare-plan');
+
+Route::get('/login', function () {
+    return view('pages.auth.login');
+})->name('lara-login');
