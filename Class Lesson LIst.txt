@@ -2,3 +2,4 @@
 31-08-2026 = php artisan create view, compenent creation
 
 01-09-2026 = database integration, database migrate, generating fake data for database
+02-09-26 -  controller introduction, creating new model, factory, seeder, getting data from database
