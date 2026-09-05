@@ -7,7 +7,7 @@
 <!-- Content -->
 @section('content')
     <!-- Page Header -->
-    <x-admin.phead title='User - Create' subtitle='Create a New User'>
+    <x-admin.phead title='Users - Create' subtitle='Create a New User'>
         <a class="btn-custom btn-custom-secondary btn-quick-action" href="{{ route('users.index') }}">
             <i class="bi bi-plus-lg"></i> Back
         </a>
