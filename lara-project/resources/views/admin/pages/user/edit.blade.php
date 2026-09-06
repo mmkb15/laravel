@@ -7,49 +7,58 @@
 <!-- Content -->
 @section('content')
     <!-- Page Header -->
-    <x-admin.phead title='Users - Edit' subtitle='Update a New User'>
+    <x-admin.phead title='Users - Edit' subtitle='Edit User Information'>
         <a class="btn-custom btn-custom-secondary btn-quick-action" href="{{ route('users.index') }}">
             <i class="bi bi-plus-lg"></i> Back
         </a>
     </x-admin.phead>
+    
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ session('error')  }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-    <div class="col-12 col-lg-6">
-        <div class="card border-light shadow-sm p-4 h-100">
-            <h5 class="card-title mb-4">Basic Fields</h5>
-
+    <div class="col-12">
+        <form action="{{ route('users.update', ['id' => $user->id]) }}" method="POST">
+            @csrf
+            @method('PUT')
             <!-- Text input -->
             <div class="mb-3">
-                <label for="basicText" class="form-label-custom">Username</label>
-                <input type="text" class="form-control-custom" id="basicText" placeholder="Enter username">
+                <label for="basicText" class="form-label-custom">Name</label>
+                <input type="text" name="name" class="form-control-custom" id="basicText"
+                    placeholder="Enter username" value="{{ $user->name }}">
+                    <x-admin.error-msg name="name" />
+
             </div>
 
             <!-- Email input -->
             <div class="mb-3">
-                <label for="basicEmail" class="form-label-custom">Email Address</label>
-                <input type="email" class="form-control-custom" id="basicEmail" placeholder="name@example.com">
-                <span class="text-muted">We'll never share your email with anyone else.</span>
+                <label class="form-label-custom">Email Address</label>
+                <input type="text" name="email" class="form-control-custom" placeholder="name@example.com"
+                value="{{ $user->email }}">
+                <x-admin.error-msg name="email" />
             </div>
 
-            <!-- Password input -->
+            <!-- Role input -->
             <div class="mb-3">
-                <label for="basicPassword" class="form-label-custom">Password</label>
-                <input type="password" class="form-control-custom" id="basicPassword"
-                    placeholder="Enter your secure password">
+                <label class="form-label-custom">Role</label>
+                <select name="role_id" class="form-select-custom">
+                    <option value="0" selected disabled>Select Role</option>
+                    @foreach ( $roles as $item )
+                        
+                    <option value="{{ $item->id }}"
+                        @selected($user->role_id == $item->id)>{{ $item->name}}</option>
+                    @endforeach
+                </select>
+                <x-admin.error-msg name="role_id" />
             </div>
 
-            <!-- Disabled State -->
-            <div class="mb-3">
-                <label for="basicDisabled" class="form-label-custom">Disabled Input</label>
-                <input type="text" class="form-control-custom" id="basicDisabled" value="This input field is disabled"
-                    disabled="">
-            </div>
 
-            <!-- Readonly State -->
-            <div class="mb-0">
-                <label for="basicReadonly" class="form-label-custom">Read-only Input</label>
-                <input type="text" class="form-control-custom" id="basicReadonly" value="This field is read-only"
-                    readonly="">
+            <div class="mb-3 text-end">
+                <button type="submit" class="btn-custom btn-custom-secondary">Update</button>
             </div>
-        </div>
+        </form>
     </div>
 @endsection
