@@ -6,3 +6,4 @@
 02-09-26   = Laravel-Project (Templating)
 03-09-26   = displaying data form database ,database eloquent, joining table, pagination
 04-09-26   = CRUD
+05-09-26   = Delete modal with js, new product model

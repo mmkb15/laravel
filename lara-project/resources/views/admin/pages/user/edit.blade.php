@@ -21,7 +21,7 @@
     @endif
 
     <div class="col-12">
-        <form action="{{ route('users.update', ['id' => $user->id]) }}" method="POST">
+        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
             @csrf
             @method('PUT')
             <!-- Text input -->
