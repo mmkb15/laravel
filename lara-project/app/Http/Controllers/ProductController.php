@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+
+        $products = Product::with('category','brand')->orderby('id', 'desc')->get();  
+        // $brands = Product::with('brand')->orderby('id', 'desc')->get();  
+        // dd($products->first()->category->name);
+        // return view('admin.pages.product.index', compact('products','brands'));
+        return view('admin.pages.product.index', compact('products'));
     }
 
     /**
@@ -20,7 +27,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::orderBy('name', 'asc')->get();
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('admin.pages.product.create',compact('brands', 'categories'));
     }
 
     /**
@@ -28,7 +37,57 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            // For Multiple Image
+            // 'image'         => 'required|array',
+            // 'image*'        => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+
+            'name'          => 'required|min:3',
+            // For Single Image
+            'image'         => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ],
+            [
+                'name.required' => 'fill it bro',
+                'name.min' => 'type more then 3 characters ',
+                'image.max'     => 'image size is too large',
+            ]
+        );
+        if($request->hasFile('image')){
+            // dd('has image');
+            $imgName = time() . '.' . $request->image->extension();
+            // dd($imgName);
+            $request->image->move(public_path('uploads'),$imgName);
+
+            Product::create([
+                'name'          => $request->name,
+                'price'         => $request->price,
+                'quantity'      => $request->qty,
+                'reorder_level' => $request->reorder,
+                'description'   => $request->desc,
+                'category_id'   => $request->category_id,
+                'brand_id'      => $request->brand_id,
+                'active'        => $request->active ? 1 : 0,
+                'image'         => "uploads/" . $imgName,
+            ]);
+            return redirect()->route('products.index')->with('success', 'Product created successfully.');
+
+        }else{
+            // dd('no image');
+            Product::create([
+                'name'          => $request->name,
+                'price'         => $request->price,
+                'quantity'      => $request->qty,
+                'reorder_level' => $request->reorder,
+                'description'   => $request->desc,
+                'category_id'   => $request->category_id,
+                'brand_id'      => $request->brand_id,
+                'active'        => $request->active ? 1 : 0,
+                // 'image'         => "uploads/" . $imgName,
+            ]);
+            return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        }
     }
 
     /**
