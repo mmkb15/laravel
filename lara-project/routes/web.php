@@ -9,10 +9,10 @@ Route::get('/', function () {
 });
 Route::get('/dashboard', function () {
     return view('admin.pages.dashboard');
-});
+})->name('dashboard');
 Route::get('/login', function () {
     return view('admin.pages.auth.login');
-});
+})->name('login');
 
 // Route::get('/users',[UserController::class,'index'])->name('users.index');
 // Route::get('/users/create',[UserController::class,'create'])->name('users.create');
