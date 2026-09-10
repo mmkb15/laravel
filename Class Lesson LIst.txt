@@ -9,3 +9,4 @@
 06-09-26   = Delete modal with js, new product model
 08-09-26   = Image upload
 09-09-26   = Image upload improved
+10-09-26   = authentication with Laravel breezee
