@@ -166,7 +166,7 @@
                 <ul class="flex flex-column gap14">
                     <li class="product-item">
                         <div class="image">
-                            <img src="images/products/1.png" alt="">
+                            <img src="{{ asset('assets/images/products/1.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -188,7 +188,7 @@
                     </li>
                     <li class="product-item">
                         <div class="image">
-                            <img src="images/products/2.png" alt="">
+                            <img src="{{ asset('assets/images/products/2.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -200,7 +200,7 @@
                                 <div class="body-text">Sflat</div>
                             </div>
                             <div class="country">
-                                <img src="images/country/3.png" alt="">
+                                <img src="{{ asset('assets/images/country/3.png') }}" alt="">
                             </div>
                             <div>
                                 <div class="body-title-2 mb-3">-15%</div>
@@ -210,7 +210,7 @@
                     </li>
                     <li class="product-item">
                         <div class="image">
-                            <img src="images/products/3.png" alt="">
+                            <img src="{{ asset('assets/images/products/3.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -222,7 +222,7 @@
                                 <div class="body-text">Sflat</div>
                             </div>
                             <div class="country">
-                                <img src="images/country/1.png" alt="">
+                                <img src="{{ asset('assets/images/country/1.png') }}" alt="">
                             </div>
                             <div>
                                 <div class="body-title-2 mb-3">-15%</div>
@@ -232,7 +232,7 @@
                     </li>
                     <li class="product-item">
                         <div class="image">
-                            <img src="images/products/4.png" alt="">
+                            <img src="{{ asset('assets/images/products/4.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -244,7 +244,7 @@
                                 <div class="body-text">Sflat</div>
                             </div>
                             <div class="country">
-                                <img src="images/country/4.png" alt="">
+                                <img src="{{ asset('assets/images/country/4.png') }}" alt="">
                             </div>
                             <div>
                                 <div class="body-title-2 mb-3">-15%</div>
@@ -254,7 +254,7 @@
                     </li>
                     <li class="product-item">
                         <div class="image">
-                            <img src="images/products/5.png" alt="">
+                            <img src="{{ asset('assets/images/products/5.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -266,7 +266,7 @@
                                 <div class="body-text">Sflat</div>
                             </div>
                             <div class="country">
-                                <img src="images/country/5.png" alt="">
+                                <img src="{{ asset('assets/images/country/5.png') }}" alt="">
                             </div>
                             <div>
                                 <div class="body-title-2 mb-3">-15%</div>
@@ -307,7 +307,7 @@
             <ul class="flex flex-column justify-between gap10 h-full">
                 <li class="country-item">
                     <div class="image">
-                        <img src="images/country/6.png" alt="">
+                        <img src="{{ asset('assets/images/country/6.png') }}" alt="">
                     </div>
                     <div class="flex-grow flex items-center justify-between">
                         <a href="countries.html" class="body-text name">Turkish Flag</a>
@@ -319,7 +319,7 @@
                 </li>
                 <li class="country-item">
                     <div class="image">
-                        <img src="images/country/7.png" alt="">
+                        <img src="{{ asset('assets/images/country/7.png') }}" alt="">
                     </div>
                     <div class="flex-grow flex items-center justify-between">
                         <a href="countries.html" class="body-text name">Belgium</a>
@@ -331,7 +331,7 @@
                 </li>
                 <li class="country-item">
                     <div class="image">
-                        <img src="images/country/8.png" alt="">
+                        <img src="{{ asset('assets/images/country/8.png') }}" alt="">
                     </div>
                     <div class="flex-grow flex items-center justify-between">
                         <a href="countries.html" class="body-text name">Sweden</a>
@@ -343,7 +343,7 @@
                 </li>
                 <li class="country-item">
                     <div class="image">
-                        <img src="images/country/9.png" alt="">
+                        <img src="{{ asset('assets/images/country/9.png') }}" alt="">
                     </div>
                     <div class="flex-grow flex items-center justify-between">
                         <a href="countries.html" class="body-text name">Vietnamese</a>
@@ -355,7 +355,7 @@
                 </li>
                 <li class="country-item">
                     <div class="image">
-                        <img src="images/country/10.png" alt="">
+                        <img src="{{ asset('assets/images/country/10.png') }}" alt="">
                     </div>
                     <div class="flex-grow flex items-center justify-between">
                         <a href="countries.html" class="body-text name">Australia</a>
@@ -367,7 +367,7 @@
                 </li>
                 <li class="country-item">
                     <div class="image">
-                        <img src="images/country/11.png" alt="">
+                        <img src="{{ asset('assets/images/country/11.png') }}" alt="">
                     </div>
                     <div class="flex-grow flex items-center justify-between">
                         <a href="countries.html" class="body-text name">Saudi Arabia</a>
@@ -418,7 +418,7 @@
                 <ul class="flex flex-column gap18">
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/1.png" alt="">
+                            <img src="{{ asset('assets/images/shop/1.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -437,7 +437,7 @@
                     </li>
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/2.png" alt="">
+                            <img src="{{ asset('assets/images/shop/2.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -456,7 +456,7 @@
                     </li>
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/3.png" alt="">
+                            <img src="{{ asset('assets/images/shop/3.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -475,7 +475,7 @@
                     </li>
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/4.png" alt="">
+                            <img src="{{ asset('assets/images/shop/4.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -494,7 +494,7 @@
                     </li>
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/5.png" alt="">
+                            <img src="{{ asset('assets/images/shop/5.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -513,7 +513,7 @@
                     </li>
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/6.png" alt="">
+                            <img src="{{ asset('assets/images/shop/6.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -532,7 +532,7 @@
                     </li>
                     <li class="shop-item">
                         <div class="image">
-                            <img src="images/shop/7.png" alt="">
+                            <img src="{{ asset('assets/images/shop/7.png') }}" alt="">
                         </div>
                         <div class="flex-grow flex items-center justify-between gap20">
                             <div>
@@ -598,7 +598,7 @@
                 <ul class="flex flex-column gap10">
                     <li class="product-item gap14">
                         <div class="image">
-                            <img src="images/products/6.png" alt="">
+                            <img src="{{ asset('assets/images/products/6.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -614,7 +614,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image">
-                            <img src="images/products/7.png" alt="">
+                            <img src="{{ asset('assets/images/products/7.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -630,7 +630,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image">
-                            <img src="images/products/8.png" alt="">
+                            <img src="{{ asset('assets/images/products/8.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -646,7 +646,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image">
-                            <img src="images/products/9.png" alt="">
+                            <img src="{{ asset('assets/images/products/9.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -664,7 +664,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image">
-                            <img src="images/products/10.png" alt="">
+                            <img src="{{ asset('assets/images/products/10.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow">
                             <div class="name">
@@ -738,7 +738,7 @@
                 <ul class="flex flex-column gap18">
                     <li class="product-item gap14">
                         <div class="image small">
-                            <img src="images/products/11.png" alt="">
+                            <img src="{{ asset('assets/images/products/11.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow gap10">
                             <div class="name">
@@ -750,7 +750,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image small">
-                            <img src="images/products/12.png" alt="">
+                            <img src="{{ asset('assets/images/products/12.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow gap10">
                             <div class="name">
@@ -762,7 +762,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image small">
-                            <img src="images/products/13.png" alt="">
+                            <img src="{{ asset('assets/images/products/13.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow gap10">
                             <div class="name">
@@ -774,7 +774,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image small">
-                            <img src="images/products/14.png" alt="">
+                            <img src="{{ asset('assets/images/products/14.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow gap10">
                             <div class="name">
@@ -786,7 +786,7 @@
                     </li>
                     <li class="product-item gap14">
                         <div class="image small">
-                            <img src="images/products/15.png" alt="">
+                            <img src="{{ asset('assets/images/products/15.png') }}" alt="">
                         </div>
                         <div class="flex items-center justify-between flex-grow gap10">
                             <div class="name">
@@ -874,7 +874,7 @@
             <ul class="flex flex-column gap20 overflow-h">
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-2.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-2.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -892,7 +892,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-3.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-3.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -910,7 +910,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-4.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-4.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -928,7 +928,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-5.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-5.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -946,7 +946,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-2.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-2.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -964,7 +964,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-3.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-3.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -982,7 +982,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-4.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-4.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">
@@ -1000,7 +1000,7 @@
                 </li>
                 <li class="comment-item">
                     <div class="image">
-                        <img src="images/avatar/user-5.png" alt="">
+                        <img src="{{ asset('assets/images/avatar/user-5.png') }}" alt="">
                     </div>
                     <div class="">
                         <div class="mb-4 name">

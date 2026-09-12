@@ -3185,3 +3185,8 @@ span.flatpickr-weekday {
 
 
 
+.success-message {
+animation: slideDown 0.5s ease-out;
+}
+
+

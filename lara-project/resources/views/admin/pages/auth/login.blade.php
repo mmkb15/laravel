@@ -14,16 +14,31 @@
     </a>
     
     <p class="login-subtitle">Please sign in to access your dashboard</p>
+
+    <!-- Registration Message -->
+    {{-- @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif --}}
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session('success')  }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     
     <!-- Login Form -->
-    <form action="index.html" method="GET" id="loginForm" class="needs-validation" novalidate>
+    <form action="{{ route('login.store') }}" method="POST" id="loginForm" class="needs-validation" novalidate>
+        @csrf
         
         <!-- Email Input Group -->
         <div class="login-form-group">
             <label for="email" class="login-form-label">Email Address</label>
             <div class="login-input-group">
                 <i class="bi bi-envelope input-icon"></i>
-                <input type="email" id="email" class="login-input" placeholder="name@company.com" required>
+                <input type="email" name="email" id="email" class="login-input" placeholder="name@company.com" value="{{ old('email') ?? 'asia@gmail.com' }}" required>
             </div>
         </div>
         
@@ -32,12 +47,14 @@
             <label for="password" class="login-form-label">Password</label>
             <div class="login-input-group">
                 <i class="bi bi-shield-lock input-icon"></i>
-                <input type="password" id="password" class="login-input login-input-password" placeholder="••••••••" required>
+                <input type="password" name="password"  id="password" class="login-input login-input-password" placeholder="••••••••" value="{{ old('password') ?? '123456789' }}" required>
                 <button type="button" class="password-toggle-btn" id="toggle-password" aria-label="Show password">
                     <i class="bi bi-eye"></i>
                 </button>
             </div>
         </div>
+        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <x-input-error :messages="$errors->get('password')" class="mt-2" />
         
         <!-- Options (Remember me & Forgot Password) -->
         <div class="login-options">
@@ -73,7 +90,7 @@
     
     <!-- Footer Link -->
     <p class="login-footer-text">
-        Don't have an account? <a href="#" id="link-register">Register Now</a>
+        Alreday have an account? <a href="{{ route('register') }}" id="link-register">Register Now</a>
     </p>
     
 </div>
