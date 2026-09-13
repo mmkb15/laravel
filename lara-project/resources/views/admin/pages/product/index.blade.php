@@ -134,13 +134,13 @@
 <!-- Footer Controls / Pagination -->
  <div class="table-footer-control">
 
-    {{-- <span class="table-pagination-info">
+    <span class="table-pagination-info">
         Showing {{ $products->firstItem() ?? 0 }}
         to {{ $products->lastItem() ?? 0 }}
-        of {{ $products->total() }} entries --}}
+        of {{ $products->total() }} entries
     </span>
 
-    {{-- @if ($products->hasPages())
+    @if ($products->hasPages())
         <nav aria-label="Page navigation">
             <ul class="pagination mb-0">
 
@@ -215,7 +215,7 @@
 
             </ul>
         </nav>
-    @endif  --}}
+    @endif 
 
 
 </div>
@@ -223,8 +223,8 @@
         
     </div>
 @endsection
-
-{{-- <x-admin.modal id="modalDelete" title="Delete User">
+{{-- 
+<x-admin.modal id="modalDelete" title="Delete User">
  <div class="text-center">
      <p class="mt-3">Are you sure you want to delete this user ?</p>
      <span class="fw-bold badge border border-danger text-danger py-2 px-4">Mina</span>

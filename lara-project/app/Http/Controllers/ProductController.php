@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
 
-        $products = Product::with('category','brand')->orderby('id', 'desc')->get();  
+        $products = Product::with('category','brand')->orderby('id', 'desc')->paginate(5);  
         // $brands = Product::with('brand')->orderby('id', 'desc')->get();  
         // dd($products->first()->category->name);
         // return view('admin.pages.product.index', compact('products','brands'));

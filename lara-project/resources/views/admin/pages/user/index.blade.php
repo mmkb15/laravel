@@ -100,6 +100,7 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form> --}}
+                                @if (auth()->user()->role_id == 1)
                                     <button
                                         type="button" 
                                         class="table-btn-action delete" 
@@ -111,7 +112,9 @@
                                         >
                                         
                                         <i class="bi bi-trash"></i>
-                                    </button>
+                                    </button>  
+                                @endif
+
                             </div>
                         </td>
                     </tr>

@@ -1022,3 +1022,16 @@
     </div>
 </div>
 @endsection
+
+
+<!-- Script -->
+@section('script')
+    <script src="{{asset('assets/js/zoom.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/apexcharts.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/line-chart-1.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/line-chart-2.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/line-chart-3.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/line-chart-4.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/line-chart-5.js')}}"></script>
+    <script src="{{asset('assets/js/apexcharts/line-chart-6.js')}}"></script>
+@endsection

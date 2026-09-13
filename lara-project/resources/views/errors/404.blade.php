@@ -8,7 +8,7 @@
 <div class="login-card text-center">
     
     <!-- Brand Identity -->
-    <a href="index.html" class="login-brand text-decoration-none">
+    <a href="{{ route('dashboard') }}" class="login-brand text-decoration-none">
         <i class="bi bi-asterisk"></i>
         <span>Spark Admin</span>
     </a>
@@ -26,7 +26,7 @@
     </p>
     
     <div class="error-actions-group">
-        <a href="index.html" class="btn-custom btn-custom-primary">
+        <a href="{{ route('dashboard') }}" class="btn-custom btn-custom-primary">
             <i class="bi bi-house"></i> Back to Dashboard
         </a>
     </div>
