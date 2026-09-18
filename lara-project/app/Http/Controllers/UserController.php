@@ -133,7 +133,8 @@ class UserController extends Controller
         exit;
         }
         $roles = Role::orderBy('name','asc')->get();
-        $user = User::find($id);
+        // $user = User::find($id);
+        $user = User::findOrFail($id);
         // dd($user);   
         return view('admin.pages.user.edit', compact('roles', 'user'));
     }
