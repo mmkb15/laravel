@@ -22,7 +22,8 @@ class ProductController extends Controller
                 $term = $request->string('search');
                 $query->where(function ($q) use ($term) {
                     $q->where('name', 'like', "%{$term}%")
-                        ->orWhere('sku', 'like', "%{$term}%");
+                        ->orWhere('sku', 'like', "%{$term}%")
+                        ->orWhereHas('brand', fn ($b) => $b->where('name', 'like', "%{$term}%"));
                 });
             })
             ->latest()
@@ -54,6 +55,8 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'images' => 'nullable|array|max:8',
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:4096',
+        ], [
+            'sale_price.lte' => "Sale price can't be higher than the regular price.",
         ]);
 
         $data['slug'] = Str::slug($data['name']) . '-' . Str::lower(Str::random(6));
@@ -74,6 +77,13 @@ class ProductController extends Controller
         });
 
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    }
+
+    public function show(Product $product)
+    {
+        $product->load(['category', 'brand', 'images', 'skus']);
+
+        return view('admin.pages.product.show', compact('product'));
     }
 
     public function edit(Product $product)
@@ -103,9 +113,12 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:4096',
             'remove_images' => 'nullable|array',
             'remove_images.*' => 'integer|exists:product_images,id',
+            'primary_image_id' => 'nullable|integer|exists:product_images,id',
+        ], [
+            'sale_price.lte' => "Sale price can't be higher than the regular price.",
         ]);
 
-        unset($data['images'], $data['remove_images']);
+        unset($data['images'], $data['remove_images'], $data['primary_image_id']);
         $data['slug'] = Str::slug($data['name']) . '-' . $product->id;
 
         DB::transaction(function () use ($request, $product, $data) {
@@ -119,7 +132,13 @@ class ProductController extends Controller
             }
 
             $this->storeProductImages($request, $product);
-            $this->syncPrimaryImage($product);
+
+            $chosenPrimaryId = $request->input('primary_image_id');
+            $chosenPrimary = $chosenPrimaryId
+                ? $product->images()->where('id', $chosenPrimaryId)->first()
+                : null;
+
+            $this->syncPrimaryImage($product, $chosenPrimary);
 
             ProductSku::updateOrCreate(
                 ['product_id' => $product->id],
@@ -175,15 +194,16 @@ class ProductController extends Controller
         $this->syncPrimaryImage($product);
     }
 
-    private function syncPrimaryImage(Product $product): void
+    private function syncPrimaryImage(Product $product, ?ProductImage $preferred = null): void
     {
-        $primary = $product->images()->where('is_primary', true)->first();
-        $first = $primary ?: $product->images()->orderBy('sort_order')->first();
+        $primary = $preferred
+            ?: $product->images()->where('is_primary', true)->first()
+            ?: $product->images()->orderBy('sort_order')->first();
 
-        if ($first) {
+        if ($primary) {
             $product->images()->update(['is_primary' => false]);
-            $first->update(['is_primary' => true]);
-            $product->updateQuietly(['image' => $first->path]);
+            $primary->update(['is_primary' => true]);
+            $product->updateQuietly(['image' => $primary->path]);
         } else {
             $product->updateQuietly(['image' => null]);
         }

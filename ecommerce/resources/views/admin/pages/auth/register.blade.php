@@ -18,9 +18,7 @@
                 </div>
             </div>
 
-            @if($errors->any())
-                <div class="alert alert-danger auth-alert">{{ $errors->first() }}</div>
-            @endif
+            <x-alert type="error" class="auth-alert" :messages="$errors->all()" />
 
             <form class="form-login flex flex-column gap20" method="POST" action="{{ route('register.store') }}">
                 @csrf

@@ -15,7 +15,7 @@
         </ul>
     </div>
 
-    @if($errors->any())<div class="alert alert-danger mb-20">{{ $errors->first() }}</div>@endif
+    <x-alert type="error" :messages="$errors->all()" />
 
     <form class="template-form two-col" method="POST" action="{{ route('orders.store') }}">
         @csrf
@@ -38,7 +38,7 @@
                     <select id="product_id" name="product_id" required>
                         <option value="">Choose product</option>
                         @foreach($products as $product)
-                            <option value="{{ $product->id }}" @selected(old('product_id') == $product->id)>{{ $product->name }} — ${{ $product->display_price }} ({{ $product->stock }} in stock)</option>
+                            <option value="{{ $product->id }}" data-stock="{{ $product->stock }}" @selected(old('product_id') == $product->id)>{{ $product->name }} — ${{ $product->display_price }} ({{ $product->stock }} in stock)</option>
                         @endforeach
                     </select>
                 </div>
@@ -47,6 +47,7 @@
                 <div class="template-field">
                     <label for="quantity">Quantity <span class="required">*</span></label>
                     <input id="quantity" class="template-input" type="number" name="quantity" value="{{ old('quantity',1) }}" min="1" required>
+                    <div class="field-hint" id="stock-hint">Pick a product to see available stock.</div>
                 </div>
                 <div class="template-field">
                     <label for="payment_method">Payment Method <span class="required">*</span></label>
@@ -85,4 +86,57 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var product = document.getElementById('product_id');
+        var quantity = document.getElementById('quantity');
+        var hint = document.getElementById('stock-hint');
+
+        if (!product || !quantity || !hint) {
+            return;
+        }
+
+        function stockOf(select) {
+            var option = select.options[select.selectedIndex];
+            return option ? parseInt(option.dataset.stock || '', 10) : NaN;
+        }
+
+        function sync() {
+            var stock = stockOf(product);
+
+            if (isNaN(stock)) {
+                quantity.removeAttribute('max');
+                hint.textContent = 'Pick a product to see available stock.';
+                hint.classList.remove('is-warning');
+                return;
+            }
+
+            quantity.max = stock;
+
+            if (parseInt(quantity.value, 10) > stock) {
+                quantity.value = stock;
+            }
+
+            hint.textContent = stock + ' unit(s) available.';
+            hint.classList.toggle('is-warning', stock <= 5);
+        }
+
+        product.addEventListener('change', sync);
+        quantity.addEventListener('input', function () {
+            var stock = stockOf(product);
+
+            if (!isNaN(stock) && parseInt(quantity.value, 10) > stock) {
+                hint.textContent = 'Only ' + stock + ' unit(s) in stock.';
+                hint.classList.add('is-warning');
+            } else {
+                sync();
+            }
+        });
+
+        sync();
+    });
+</script>
 @endsection

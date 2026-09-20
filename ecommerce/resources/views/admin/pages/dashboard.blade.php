@@ -22,7 +22,7 @@
         <div class="wg-chart-default"><div class="flex items-center gap14"><div class="image type-white"><i class="icon-users"></i></div><div><div class="body-text mb-2">Customers</div><h4>{{ number_format($customerCount) }}</h4></div></div></div>
     </div>
 
-    <div class="tf-section-5 mb-30">
+    <div class="tf-section-2 mb-30">
         <div class="wg-box">
             <div class="flex items-center justify-between mb-20"><h5>Recent Orders</h5><a class="view-all" href="{{ route('orders.index') }}">View all <i class="icon-chevron-right"></i></a></div>
             <div class="ecom-table-wrap">

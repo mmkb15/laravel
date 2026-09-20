@@ -21,7 +21,7 @@
     <div class="wg-box">
         <div class="ecom-toolbar">
             <form class="ecom-search" method="GET" action="{{ route('products.index') }}">
-                <input type="search" name="search" value="{{ request('search') }}" placeholder="Search product or SKU...">
+                <input type="search" name="search" value="{{ request('search') }}" placeholder="Search product, SKU or brand...">
                 <button type="submit" aria-label="Search"><i class="icon-search"></i></button>
             </form>
             <div class="ecom-search-count">{{ $products->total() }} product(s)</div>
@@ -32,6 +32,7 @@
                 <div class="ecom-table-head">
                     <div class="cell">Product</div>
                     <div class="cell">SKU</div>
+                    <div class="cell">Brand</div>
                     <div class="cell">Category</div>
                     <div class="cell">Price</div>
                     <div class="cell">Stock</div>
@@ -46,11 +47,12 @@
                                 <div class="ecom-thumb"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></div>
                                 <div class="min-w-0">
                                     <a href="{{ route('products.edit', $product) }}" class="ecom-primary text-truncate d-block">{{ $product->name }}</a>
-                                    <div class="ecom-muted">#{{ $product->id }}{{ $product->brand ? ' · '.$product->brand->name : '' }}</div>
+                                    <div class="ecom-muted">#{{ $product->id }}</div>
                                 </div>
                             </div>
                         </div>
                         <div class="cell"><span class="body-text">{{ $product->sku }}</span></div>
+                        <div class="cell"><span class="body-text">{{ $product->brand->name ?? '—' }}</span></div>
                         <div class="cell"><span class="body-text">{{ $product->category->name ?? 'Uncategorized' }}</span></div>
                         <div class="cell"><span class="ecom-money">${{ $product->display_price }}</span></div>
                         <div class="cell"><span class="body-text">{{ number_format($product->stock) }}</span></div>
@@ -59,6 +61,7 @@
                         </div>
                         <div class="cell">
                             <div class="ecom-actions">
+                                <a href="{{ route('products.show', $product) }}" class="item eye" title="View product"><i class="icon-eye"></i></a>
                                 <a href="{{ route('products.edit', $product) }}" class="item edit" title="Edit product"><i class="icon-edit-3"></i></a>
                                 <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Delete this product?');">
                                     @csrf @method('DELETE')

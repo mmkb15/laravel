@@ -22,10 +22,6 @@
         </div>
     </div>
 
-    @if($errors->any())
-        <div class="alert alert-danger mb-20">{{ $errors->first() }}</div>
-    @endif
-
     <form class="template-form two-col" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-card">
@@ -48,6 +44,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @error('category_id')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <div class="template-field">
                     <label for="brand_id">Brand</label>
@@ -59,6 +56,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @error('brand_id')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -71,6 +69,7 @@
                 <div class="template-field">
                     <label for="stock">Stock <span class="required">*</span></label>
                     <input id="stock" class="template-input" type="number" name="stock" value="{{ old('stock', 0) }}" min="0" required>
+                    @error('stock')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -78,10 +77,13 @@
                 <div class="template-field">
                     <label for="price">Regular Price <span class="required">*</span></label>
                     <div class="input-with-prefix"><span>$</span><input id="price" class="template-input" type="number" step="0.01" name="price" value="{{ old('price') }}" placeholder="0.00" required></div>
+                    @error('price')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <div class="template-field">
                     <label for="sale_price">Sale Price</label>
                     <div class="input-with-prefix"><span>$</span><input id="sale_price" class="template-input" type="number" step="0.01" name="sale_price" value="{{ old('sale_price') }}" placeholder="0.00"></div>
+                    <div class="field-hint" id="sale-price-hint"></div>
+                    @error('sale_price')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -93,11 +95,13 @@
                         <option value="inactive" @selected(old('status') === 'inactive')>Inactive</option>
                     </select>
                 </div>
+                @error('status')<div class="field-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="template-field">
                 <label for="description">Description</label>
                 <textarea id="description" name="description" placeholder="Write product description...">{{ old('description') }}</textarea>
+                @error('description')<div class="field-error">{{ $message }}</div>@enderror
             </div>
         </div>
 
@@ -107,6 +111,8 @@
                 <label for="product-images">Upload Images</label>
                 <input id="product-images" class="filepond" type="file" name="images[]" accept="image/png,image/jpeg,image/webp" multiple>
                 <div class="ecom-upload-note">Add up to 8 images. JPG, PNG and WebP. Maximum 4MB per image.</div>
+                @error('images')<div class="field-error">{{ $message }}</div>@enderror
+                @error('images.*')<div class="field-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-actions">
@@ -137,4 +143,5 @@
             });
         });
     </script>
+    <script src="{{ asset('assets/js/admin-product-price.js') }}"></script>
 @endsection

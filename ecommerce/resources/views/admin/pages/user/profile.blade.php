@@ -18,7 +18,7 @@
         </ul>
     </div>
 
-    @if($errors->any())<div class="alert alert-danger mb-20">{{ $errors->first() }}</div>@endif
+    <x-alert type="error" :messages="$errors->all()" />
 
     <form class="template-form two-col" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
         @csrf @method('PUT')

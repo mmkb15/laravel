@@ -51,8 +51,17 @@ class OrderController extends Controller
         ]);
 
         $product = Product::findOrFail($data['product_id']);
+
+        if ($product->stock < 1) {
+            return back()->withErrors([
+                'quantity' => "\"{$product->name}\" is out of stock right now.",
+            ])->withInput();
+        }
+
         if ($data['quantity'] > $product->stock) {
-            return back()->withErrors(['quantity' => 'Not enough stock available.'])->withInput();
+            return back()->withErrors([
+                'quantity' => "Only {$product->stock} unit(s) of \"{$product->name}\" are in stock. You asked for {$data['quantity']}.",
+            ])->withInput();
         }
 
         $unit = (float) ($product->sale_price ?: $product->price);

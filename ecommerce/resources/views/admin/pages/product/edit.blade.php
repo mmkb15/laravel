@@ -22,10 +22,6 @@
         </div>
     </div>
 
-    @if($errors->any())
-        <div class="alert alert-danger mb-20">{{ $errors->first() }}</div>
-    @endif
-
     <form class="template-form two-col" action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
         @csrf @method('PUT')
         <div class="form-card">
@@ -47,6 +43,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @error('category_id')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <div class="template-field">
                     <label for="brand_id">Brand</label>
@@ -58,6 +55,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @error('brand_id')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -70,6 +68,7 @@
                 <div class="template-field">
                     <label for="stock">Stock <span class="required">*</span></label>
                     <input id="stock" class="template-input" type="number" name="stock" value="{{ old('stock', $product->stock) }}" min="0" required>
+                    @error('stock')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -77,10 +76,13 @@
                 <div class="template-field">
                     <label for="price">Regular Price <span class="required">*</span></label>
                     <div class="input-with-prefix"><span>$</span><input id="price" class="template-input" type="number" step="0.01" name="price" value="{{ old('price', $product->price) }}" required></div>
+                    @error('price')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <div class="template-field">
                     <label for="sale_price">Sale Price</label>
                     <div class="input-with-prefix"><span>$</span><input id="sale_price" class="template-input" type="number" step="0.01" name="sale_price" value="{{ old('sale_price', $product->sale_price) }}"></div>
+                    <div class="field-hint" id="sale-price-hint"></div>
+                    @error('sale_price')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
             </div>
 
@@ -92,11 +94,13 @@
                         <option value="inactive" @selected(old('status', $product->status) === 'inactive')>Inactive</option>
                     </select>
                 </div>
+                @error('status')<div class="field-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="template-field">
                 <label for="description">Description</label>
                 <textarea id="description" name="description">{{ old('description', $product->description) }}</textarea>
+                @error('description')<div class="field-error">{{ $message }}</div>@enderror
             </div>
         </div>
 
@@ -105,20 +109,42 @@
             <div class="template-field">
                 <label>Current Images</label>
                 @if($product->images->count())
-                    <div class="ecom-gallery">
+                    <div class="ecom-gallery" data-gallery>
                         @foreach($product->images as $image)
-                            <div class="ecom-gallery-item">
-                                <img src="{{ $image->url }}" alt="{{ $product->name }}">
-                                @if($image->is_primary)<span class="ecom-gallery-badge">Primary</span>@endif
-                                @if(!str_starts_with($image->path, 'assets/'))
-                                    <label class="ecom-gallery-remove">
-                                        <input type="checkbox" name="remove_images[]" value="{{ $image->id }}">
-                                        Remove
+                            @php $locked = str_starts_with($image->path, 'assets/'); @endphp
+                            <div class="ecom-gallery-item {{ $image->is_primary ? 'is-primary' : '' }}" data-gallery-item>
+                                <div class="ecom-gallery-figure" data-gallery-pick>
+                                    <img src="{{ $image->url }}" alt="{{ $product->name }}">
+                                    <span class="ecom-gallery-badge">Primary</span>
+                                </div>
+
+                                <div class="ecom-gallery-bar">
+                                    <label class="ecom-gallery-primary" for="primary-image-{{ $image->id }}">
+                                        <input id="primary-image-{{ $image->id }}"
+                                               type="radio"
+                                               name="primary_image_id"
+                                               value="{{ $image->id }}"
+                                               data-gallery-primary
+                                               @checked($image->is_primary)>
+                                        <span class="label-off">Set as primary</span>
+                                        <span class="label-on">Primary</span>
                                     </label>
-                                @endif
+
+                                    @if(! $locked)
+                                        <label class="ecom-gallery-remove" for="remove-image-{{ $image->id }}" title="Delete this image on save">
+                                            <input id="remove-image-{{ $image->id }}"
+                                                   type="checkbox"
+                                                   name="remove_images[]"
+                                                   value="{{ $image->id }}"
+                                                   data-gallery-remove>
+                                            <span>Remove</span>
+                                        </label>
+                                    @endif
+                                </div>
                             </div>
                         @endforeach
                     </div>
+                    <div class="ecom-upload-note">Click an image to make it the main product photo. Tick <strong>Remove</strong> to delete it when you save.</div>
                 @else
                     <div class="ecom-empty">No product images yet.</div>
                 @endif
@@ -128,6 +154,8 @@
                 <label for="product-images">Add More Images</label>
                 <input id="product-images" class="filepond" type="file" name="images[]" accept="image/png,image/jpeg,image/webp" multiple>
                 <div class="ecom-upload-note">New images are added to the existing gallery.</div>
+                @error('images')<div class="field-error">{{ $message }}</div>@enderror
+                @error('images.*')<div class="field-error">{{ $message }}</div>@enderror
             </div>
 
             <div class="form-actions">
@@ -156,4 +184,6 @@
             });
         });
     </script>
+    <script src="{{ asset('assets/js/admin-product-gallery.js') }}"></script>
+    <script src="{{ asset('assets/js/admin-product-price.js') }}"></script>
 @endsection

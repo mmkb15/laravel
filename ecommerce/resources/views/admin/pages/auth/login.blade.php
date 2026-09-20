@@ -18,13 +18,8 @@
                 </div>
             </div>
 
-            @if(session('success'))
-                <div class="alert alert-success auth-alert">{{ session('success') }}</div>
-            @endif
-
-            @if($errors->any())
-                <div class="alert alert-danger auth-alert">{{ $errors->first() }}</div>
-            @endif
+            <x-alert type="success" class="auth-alert" :messages="session('success')" />
+            <x-alert type="error" class="auth-alert" :messages="$errors->all()" />
 
             <form class="form-login flex flex-column gap24" method="POST" action="{{ route('login.store') }}">
                 @csrf
