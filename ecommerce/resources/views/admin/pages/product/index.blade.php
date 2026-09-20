@@ -1,98 +1,80 @@
 @extends('admin.layouts.master')
 
+@section('title', 'Products')
+
 @section('content')
-<div class="main-content-inner">
-    <div class="main-content-wrap">
-        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+<div class="main-content-wrap">
+    <div class="flex items-center flex-wrap justify-between gap20 ecom-page-header">
+        <div>
             <h3>Product List</h3>
             <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
                 <li><a href="{{ route('dashboard') }}"><div class="text-tiny">Dashboard</div></a></li>
                 <li><i class="icon-chevron-right"></i></li>
-                <li><a href="#"><div class="text-tiny">Ecommerce</div></a></li>
-                <li><i class="icon-chevron-right"></i></li>
-                <li><div class="text-tiny">Product List</div></li>
+                <li><div class="text-tiny">Products</div></li>
             </ul>
         </div>
+        <a class="tf-button style-1 w180" href="{{ route('products.create') }}">
+            <i class="icon-plus"></i>Add Product
+        </a>
+    </div>
 
-        <div class="wg-box">
-            @if(session('success'))
-                <div class="alert alert-success mb-10">{{ session('success') }}</div>
-            @endif
+    <div class="wg-box">
+        <div class="ecom-toolbar">
+            <form class="ecom-search" method="GET" action="{{ route('products.index') }}">
+                <input type="search" name="search" value="{{ request('search') }}" placeholder="Search product or SKU...">
+                <button type="submit" aria-label="Search"><i class="icon-search"></i></button>
+            </form>
+            <div class="ecom-search-count">{{ $products->total() }} product(s)</div>
+        </div>
 
-            <div class="flex items-center justify-between gap10 flex-wrap">
-                <div class="wg-filter flex-grow">
-                    <form class="form-search">
-                        <fieldset class="name">
-                            <input type="text" placeholder="Search here..." class="" name="name" tabindex="2" value="" aria-required="true">
-                        </fieldset>
-                        <div class="button-submit">
-                            <button class="" type="submit"><i class="icon-search"></i></button>
-                        </div>
-                    </form>
+        <div class="ecom-table-wrap">
+            <div class="ecom-table ecom-product-table">
+                <div class="ecom-table-head">
+                    <div class="cell">Product</div>
+                    <div class="cell">SKU</div>
+                    <div class="cell">Category</div>
+                    <div class="cell">Price</div>
+                    <div class="cell">Stock</div>
+                    <div class="cell">Status</div>
+                    <div class="cell cell-right">Action</div>
                 </div>
-                <a class="tf-button style-1 w208" href="{{ route('products.create') }}">
-                    <i class="icon-plus"></i>Add new
-                </a>
-            </div>
 
-            <div class="wg-table table-product-list">
-                <ul class="table-title flex gap20 mb-14">
-                    <li><div class="body-title">Product</div></li>
-                    <li><div class="body-title">Product ID</div></li>
-                    <li><div class="body-title">Category</div></li>
-                    <li><div class="body-title">Status</div></li>
-                    <li><div class="body-title">Action</div></li>
-                </ul>
-
-                <ul class="flex flex-column">
-                    @forelse($products as $product)
-                    <li class="product-item gap14">
-                        <div class="image no-bg">
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                            @else
-                                <img src="{{ asset('images/products/default.png') }}" alt="No Image">
-                            @endif
+                @forelse($products as $product)
+                    <div class="ecom-table-row">
+                        <div class="cell">
+                            <div class="ecom-product-cell">
+                                <div class="ecom-thumb"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></div>
+                                <div class="min-w-0">
+                                    <a href="{{ route('products.edit', $product) }}" class="ecom-primary text-truncate d-block">{{ $product->name }}</a>
+                                    <div class="ecom-muted">#{{ $product->id }}{{ $product->brand ? ' · '.$product->brand->name : '' }}</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center justify-between gap20 flex-grow">
-                            <div class="name">
-                                <a href="#" class="body-title-2">{{ $product->name }}</a>
-                            </div>
-                            <div class="body-text">#{{ $product->id }}</div>
-                            <div class="body-text">{{ $product->category->name ?? 'N/A' }}</div>
-                            <div>
-                                @if($product->status == 'active')
-                                    <div class="block-available">Active</div>
-                                @else
-                                    <div class="block-not-available">Inactive</div>
-                                @endif
-                            </div>
-                            <div class="list-icon-function">
-                                <a href="{{ route('products.edit', $product->id) }}" class="item edit">
-                                    <i class="icon-edit-3"></i>
-                                </a>
-                                <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button onclick="return confirm('Are you sure?')" class="item trash" style="background:none; border:none; cursor:pointer;">
-                                        <i class="icon-trash-2"></i>
-                                    </button>
+                        <div class="cell"><span class="body-text">{{ $product->sku }}</span></div>
+                        <div class="cell"><span class="body-text">{{ $product->category->name ?? 'Uncategorized' }}</span></div>
+                        <div class="cell"><span class="ecom-money">${{ $product->display_price }}</span></div>
+                        <div class="cell"><span class="body-text">{{ number_format($product->stock) }}</span></div>
+                        <div class="cell">
+                            <span class="ecom-status {{ $product->status === 'active' ? '' : 'inactive' }}">{{ ucfirst($product->status) }}</span>
+                        </div>
+                        <div class="cell">
+                            <div class="ecom-actions">
+                                <a href="{{ route('products.edit', $product) }}" class="item edit" title="Edit product"><i class="icon-edit-3"></i></a>
+                                <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('Delete this product?');">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="item trash" title="Delete product"><i class="icon-trash-2"></i></button>
                                 </form>
                             </div>
                         </div>
-                    </li>
-                    @empty
-                    <li class="product-item">
-                        <div class="body-text">No products found.</div>
-                    </li>
-                    @endforelse
-                </ul>
+                    </div>
+                @empty
+                    <div class="ecom-empty">No products found.</div>
+                @endforelse
             </div>
+        </div>
 
-            <div class="divider"></div>
-            <div class="flex items-center justify-between flex-wrap gap10">
-                <div class="text-tiny">Showing {{ $products->count() }} entries</div>
-            </div>
+        <div class="ecom-pagination">
+            {{ $products->onEachSide(1)->links() }}
         </div>
     </div>
 </div>

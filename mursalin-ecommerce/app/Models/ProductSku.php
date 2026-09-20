@@ -1,0 +1,3 @@
+<?php
+namespace App\Models; use Illuminate\Database\Eloquent\Model;
+class ProductSku extends Model {protected $primaryKey='sku_id';public $timestamps=false;protected $fillable=['product_id','sku_code','price','stock_quantity','image_url'];protected $casts=['price'=>'decimal:2'];public function product(){return $this->belongsTo(Product::class,'product_id','product_id');}public function attributeValues(){return $this->belongsToMany(AttributeValue::class,'sku_attribute_values','sku_id','attribute_value_id','sku_id','value_id');}public function orderItems(){return $this->hasMany(OrderItem::class,'sku_id','sku_id');}}

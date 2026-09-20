@@ -4,38 +4,63 @@
 
 @section('content')
 <div class="main-content-wrap">
-    <div class="wg-box">
-        <h5 class="mb-20">Add New Category</h5>
+    <div class="ecom-page-header">
+        <div class="flex items-center flex-wrap justify-between gap20">
+            <div>
+                <h3>Add Category</h3>
+                <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
+                    <li><a href="{{ route('dashboard') }}"><div class="text-tiny">Dashboard</div></a></li>
+                    <li><i class="icon-chevron-right"></i></li>
+                    <li><a href="{{ route('categories.index') }}"><div class="text-tiny">Categories</div></a></li>
+                    <li><i class="icon-chevron-right"></i></li>
+                    <li><div class="text-tiny">Add Category</div></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-        <form action="{{ route('categories.store') }}" method="POST" class="form-style-1">
-            @csrf
-            <fieldset>
-                <div class="body-title mb-10">Category Name <span class="tf-color-1">*</span></div>
-                <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter category name">
-                @error('name') <div class="text-tiny tf-color-1">{{ $message }}</div> @enderror
-            </fieldset>
+    @if($errors->any())<div class="alert alert-danger mb-20">{{ $errors->first() }}</div>@endif
 
-            <fieldset>
-                <div class="body-title mb-10">Parent Category</div>
-                <div class="select">
-                    <select name="parent_id">
-                        <option value="">-- None --</option>
-                        @foreach ($parents as $parent)
-                            <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
-                                {{ $parent->name }}
-                            </option>
+    <form class="template-form two-col" method="POST" action="{{ route('categories.store') }}">
+        @csrf
+        <div class="form-card">
+            <div class="form-card-title"><i class="icon-layers"></i><h5>Category Information</h5></div>
+            <div class="template-field">
+                <label for="name">Category Name <span class="required">*</span></label>
+                <input id="name" class="template-input" type="text" name="name" value="{{ old('name') }}" placeholder="Enter category name" required>
+            </div>
+            <div class="template-field">
+                <label for="parent_id">Parent Category</label>
+                <div class="template-select">
+                    <select id="parent_id" name="parent_id">
+                        <option value="">None</option>
+                        @foreach($parents as $parent)
+                            <option value="{{ $parent->id }}" @selected(old('parent_id') == $parent->id)>{{ $parent->name }}</option>
                         @endforeach
                     </select>
                 </div>
-            </fieldset>
-
-            <fieldset>
-                <div class="body-title mb-10">Description</div>
-                <textarea name="description">{{ old('description') }}</textarea>
-            </fieldset>
-
-            <button type="submit" class="tf-button w200">Save</button>
-        </form>
-    </div>
+            </div>
+            <div class="template-field">
+                <label for="status">Status <span class="required">*</span></label>
+                <div class="template-select">
+                    <select id="status" name="status" required>
+                        <option value="active" @selected(old('status','active') === 'active')>Active</option>
+                        <option value="inactive" @selected(old('status') === 'inactive')>Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-card">
+            <div class="form-card-title"><i class="icon-file-text"></i><h5>Description</h5></div>
+            <div class="template-field">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Write category description...">{{ old('description') }}</textarea>
+            </div>
+            <div class="form-actions">
+                <button class="tf-button w-full" type="submit"><i class="icon-check"></i>Create Category</button>
+                <a class="tf-button style-2 w-full" href="{{ route('categories.index') }}">Cancel</a>
+            </div>
+        </div>
+    </form>
 </div>
 @endsection

@@ -1,0 +1,2 @@
+<?php namespace Database\Factories; use App\Models\Product; use Illuminate\Database\Eloquent\Factories\Factory; use Illuminate\Support\Str;
+class ProductFactory extends Factory {protected $model=Product::class;public function definition():array{$n=$this->faker->words(3,true);return ['category_id'=>1,'brand_id'=>1,'name'=>$n,'slug'=>Str::slug($n).'-'.$this->faker->unique()->numberBetween(1,99999),'description'=>$this->faker->paragraph(),'is_active'=>true];}}

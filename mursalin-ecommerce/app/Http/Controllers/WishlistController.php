@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers; use App\Models\{Product,Wishlist};
+class WishlistController extends Controller {public function index(){return view('store.wishlist',['wishlists'=>auth()->user()->wishlists()->with('product.skus')->latest('wishlist_id')->paginate(12)]);}public function toggle(Product $product){$w=Wishlist::where('user_id',auth()->id())->where('product_id',$product->product_id)->first();if($w){$w->delete();return back()->with('success','Removed from wishlist.');}Wishlist::create(['user_id'=>auth()->id(),'product_id'=>$product->product_id]);return back()->with('success','Added to wishlist.');}}

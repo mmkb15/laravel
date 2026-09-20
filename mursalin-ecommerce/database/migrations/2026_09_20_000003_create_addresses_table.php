@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up():void{Schema::create('addresses',function(Blueprint $t){$t->id('address_id');$t->foreignId('user_id')->constrained('users','user_id')->cascadeOnDelete();$t->enum('address_type',['Shipping','Billing'])->default('Shipping');$t->string('address_line_1',255);$t->string('address_line_2',255)->nullable();$t->string('city',100);$t->string('state',100)->nullable();$t->string('postal_code',20);$t->string('country',100);});} public function down():void{Schema::dropIfExists('addresses');}};

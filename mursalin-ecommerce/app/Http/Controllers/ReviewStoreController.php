@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers; use App\Models\{Product,Review};
+class ReviewStoreController extends Controller {public function store(\Illuminate\Http\Request $r,Product $product){$d=$r->validate(['rating'=>'required|integer|min:1|max:5','comment'=>'nullable|string|max:2000']);if(Review::where('user_id',auth()->id())->where('product_id',$product->product_id)->exists())return back()->with('error','You already reviewed this product.');Review::create(['user_id'=>auth()->id(),'product_id'=>$product->product_id,'rating'=>$d['rating'],'comment'=>$d['comment']??null]);return back()->with('success','Review submitted.');}}

@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers; use App\Models\Coupon; use Illuminate\Http\Request;
+class CouponController extends Controller {public function index(){return view('admin.coupons.index',['coupons'=>Coupon::latest('coupon_id')->paginate(15)]);}public function store(Request $r){$d=$r->validate(['code'=>'required|string|max:50|unique:coupons,code','discount_type'=>'required|in:Fixed,Percentage','discount_value'=>'required|numeric|min:0','min_order_amount'=>'nullable|numeric|min:0','expiry_date'=>'required|date','usage_limit'=>'nullable|integer|min:1']);$d['is_active']=$r->boolean('is_active');Coupon::create($d);return back()->with('success','Coupon created.');}public function destroy(Coupon $coupon){$coupon->delete();return back()->with('success','Coupon deleted.');}}
