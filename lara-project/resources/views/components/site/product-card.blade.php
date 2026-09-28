@@ -38,8 +38,8 @@
 
     </a>
 
-    <a href="cart.html" class="btn">
-        Order now →
+    <a href="javascript:void(0)" class="btn" onclick="addToCart({{ $item->id }}, '{{ $item->name }}', {{ $item->price }}, '{{ $item->image ?? ''}}')">
+        Add to Cart →
     </a>
 
 </article>

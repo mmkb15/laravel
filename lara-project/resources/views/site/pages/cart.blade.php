@@ -145,4 +145,57 @@
 
 
   @section('script')
+  <script>
+    // console.log(cart.getCart());
+
+    let cartList = document.querySelector('.cart-list');
+    function printCart(){
+        var list = cart.getCart();
+        var html = '';
+        list.forEach(item => {
+
+            // img = item.img ? "{{ asset(':img') }}".replace(':img', item.img) :  'https://placehold.net/400x400.png';
+            img = item.img ? item.img :  'https://placehold.net/400x400.png';
+            html += `
+                <article class="cart-row">
+                    <div class="pic"><img src="${img}" alt=""></div>
+                    <div class="info">
+                    <div class="name">${item.name}</div>
+                    <div class="variant">$${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="qty">
+
+                    <button data-act="-" aria-label="Decrease" onclick="decreaseQty(${item.id}")>−</button>
+
+                    <input type="text" value="${item.quantity}" inputmode="numeric" aria-label="Quantity">
+                    
+                    <button data-act="+" aria-label="Increase" onclick="increaseQty(${item.id})">+</button>
+                    </div>
+
+                    <span class="subtotal">$${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="remove" aria-label="Remove" onclick="removeFromCart(${item.id})">✕</button>
+                </article>
+            `;
+        });
+        cartList.innerHTML = html;
+    }
+    printCart();
+
+    function increaseQty(id){
+        cart.increaseQuantity(id);
+        printCart();
+    }
+
+    function decreaseQty(id){
+        cart.decreaseQuantity(id);
+        printCart();
+        printItemsNumber();
+    }
+
+    function removeFromCart(id){
+        cart.removeItem(id);
+        printCart();
+        printItemsNumber();
+    }
+ </script>
   @endsection

@@ -46,6 +46,23 @@
 @include('site.layouts.footer')
 
   <script src="{{ asset('assets_site/js/main.js') }}" defer></script>
+  <script src="{{ asset('helpers/cart-helper.js') }}" ></script>
+  <script>
+
+    const cart = new CartHelper('laraCart');
+    // cart.addItem(1, "Laptop",1000);
+    function addToCart(id, name, price, img) {
+      cart.addItem(id, name, price, img);
+      // alert(`Added to cart: ${name} (ID: ${id}, Price: ${price})`);
+      printItemsNumber();
+    }
+
+    console.log(cart.countItem());
+    function printItemsNumber(){
+      document.querySelector('.icon-btn--cart .count').innerText = cart.countItem();
+    }
+    printItemsNumber();
+  </script>
   @yield('script')
 </body>
 </html>
