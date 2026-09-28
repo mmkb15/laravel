@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UpdateMail;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Fluent;
 
 class UserController extends Controller
 {
@@ -170,11 +172,32 @@ class UserController extends Controller
             ]);
 
 
+        // Auth::login($user);
 
         if ($user) {
+
+            $role = Role::find($request->role_id);
+                    //    dd($user);
+            $user = User::find($id);
+            
+        //    dd($user);
+            $userData = [
+                'id'        => $user->id,
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'role'      => $role->name,
+                'updated'   => $user->updated_at,
+            ];
+
+        //    dd($userData);
+        $userData = new Fluent($userData);
+            Mail::to($request->email)
+            // ->send(new UpdateMail($request->name, $request->email, $role->name, $user->updated_at ));
+            ->send(new UpdateMail($userData));
             return redirect()
             ->route('users.index')
-            ->with('success', 'User created successfully');
+            ->with('success', 'User Updated successfully');
+
         } else {
             return redirect()
             ->route('users.create')

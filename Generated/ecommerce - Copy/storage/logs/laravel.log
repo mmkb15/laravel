@@ -1,0 +1,18 @@
+[2026-09-20 06:49:21] local.ERROR: rename(G:\Mursalin_1295365\Laravel\ecommerce\bootstrap\cache\pacBEE1.tmp,G:\Mursalin_1295365\Laravel\ecommerce\bootstrap\cache\packages.php): Access is denied (code: 5) {"exception":"[object] (ErrorException(code: 0): rename(G:\\Mursalin_1295365\\Laravel\\ecommerce\\bootstrap\\cache\\pacBEE1.tmp,G:\\Mursalin_1295365\\Laravel\\ecommerce\\bootstrap\\cache\\packages.php): Access is denied (code: 5) at G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php:233)
+[stacktrace]
+#0 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(265): Illuminate/Foundation/Bootstrap/HandleExceptions->handleError(2, 'rename(G://Mursa...', 'G://Mursalin_129...', 233)
+#1 [internal function]: Illuminate/Foundation/Bootstrap/HandleExceptions->{closure:Illuminate/Foundation/Bootstrap/HandleExceptions::forwardsTo():264}(2, 'rename(G://Mursa...', 'G://Mursalin_129...', 233)
+#2 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Filesystem/Filesystem.php(233): rename('G://Mursalin_129...', 'G://Mursalin_129...')
+#3 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(182): Illuminate/Filesystem/Filesystem->replace('G://Mursalin_129...', '<?php return ar...')
+#4 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(132): Illuminate/Foundation/PackageManifest->write(Array)
+#5 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(108): Illuminate/Foundation/PackageManifest->build()
+#6 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(90): Illuminate/Foundation/PackageManifest->getManifest()
+#7 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(79): Illuminate/Foundation/PackageManifest->config('aliases')
+#8 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate/Foundation/PackageManifest->aliases()
+#9 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(349): Illuminate/Foundation/Bootstrap/RegisterFacades->bootstrap(Object(Illuminate/Foundation/Application))
+#10 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(507): Illuminate/Foundation/Application->bootstrapWith(Array)
+#11 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(196): Illuminate/Foundation/Console/Kernel->bootstrap()
+#12 G:/Mursalin_1295365/Laravel/ecommerce/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1242): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#13 G:/Mursalin_1295365/Laravel/ecommerce/artisan(16): Illuminate/Foundation/Application->handleCommand(Object(Symfony/Component/Console/Input/ArgvInput))
+#14 {main}
+"} 

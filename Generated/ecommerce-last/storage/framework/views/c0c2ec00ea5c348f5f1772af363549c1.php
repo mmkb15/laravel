@@ -1,0 +1,6 @@
+<div class="bottom-page">
+    <div class="body-text">Copyright © <?php echo e(date('Y')); ?> Mursalin Ecommerce.</div>
+    <i class="icon-heart"></i>
+    <div class="body-text">All rights reserved.</div>
+</div>
+<?php /**PATH G:\Mursalin_1295365\Laravel\ecommerce\resources\views/admin/layouts/footer.blade.php ENDPATH**/ ?>

@@ -91,7 +91,7 @@
 
                 <div class="col-lg-4 col-sm-6 col-12">
                     <div class="form-switch-custom">
-                        <input class="form-switch-input-custom" type="checkbox" id="switchOne" checked="">
+                        <input class="form-switch-input-custom" type="checkbox" id="switchOne" name="active" checked="">
                         <label class="form-switch-label" for="switchOne">Active</label>
                     </div>
                 </div>

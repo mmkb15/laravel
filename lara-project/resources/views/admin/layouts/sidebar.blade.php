@@ -47,6 +47,15 @@
                             <span>Users</span>
                         </a>
                     </li>
+                    <li class="sidebar-menu-item">
+                        <a href="{{ route('roles.index') }}" 
+                        class="sidebar-menu-link {{ activeLink('roles*') }}" 
+                        id="menu-basictables" 
+                        title="Basic Tables">
+                            <i class="bi bi-shield"></i>
+                            <span>Roles</span>
+                        </a>
+                    </li>
 
                     @if (auth()->user()->role_id != 5)
                     <li class="sidebar-menu-item">
