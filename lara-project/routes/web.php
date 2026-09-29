@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/product-details/{id}', [HomeController::class, 'details'])->name('product.details');
 Route::get('/cart', [HomeController::class, 'cart'])->name('product.cart');
+Route::resource('orders', OrderController::class);
 
 
 
