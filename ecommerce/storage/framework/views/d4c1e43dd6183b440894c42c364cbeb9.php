@@ -3,8 +3,8 @@
 <?php $__env->startSection('content'); ?>
 <div class="wrap-login-page ecom-auth-page">
     <div class="flex-grow flex flex-column justify-center gap30">
-        <a href="<?php echo e(route('login')); ?>" class="auth-logo" aria-label="Mursalin Ecommerce">
-            <img src="<?php echo e(asset('assets/images/logo/logo.png')); ?>" alt="Mursalin Ecommerce">
+        <a href="<?php echo e(route('login')); ?>" class="auth-logo" aria-label="Ecommerce">
+            <img src="<?php echo e(asset('assets/images/logo/logo.png')); ?>" alt="Ecommerce">
         </a>
 
         <div class="login-box auth-login-box">
@@ -62,13 +62,13 @@
 
                 <fieldset class="template-field">
                     <label for="email">Email Address <span class="required">*</span></label>
-                    <input id="email" class="template-input" type="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="Enter your email address" autocomplete="email" required>
+                    <input id="email" class="template-input" type="email" name="email" value="<?php echo e(old('email') ?? 'admin@example.com'); ?>" placeholder="Enter your email address" autocomplete="email" required>
                 </fieldset>
 
                 <fieldset class="template-field password">
                     <label for="password">Password <span class="required">*</span></label>
                     <div class="auth-password-field">
-                        <input id="password" class="template-input password-input" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                        <input id="password" class="template-input password-input" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" name="email" value="<?php echo e(old('password') ?? 'password'); ?>" required>
                         <button type="button" class="show-pass auth-password-toggle" aria-label="Show password">
                             <i class="icon-eye view"></i>
                             <i class="icon-eye-off hide"></i>

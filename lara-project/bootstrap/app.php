@@ -18,6 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role_id' => RoleMiddleware::class,
         ]);
+        $middleware->preventRequestForgery(except: [
+            'success',
+            'fail',
+            'cancel',
+            'ipn',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
