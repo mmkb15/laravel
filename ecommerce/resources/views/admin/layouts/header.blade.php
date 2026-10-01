@@ -1,10 +1,9 @@
 <div class="header-dashboard">
     <div class="wrap">
         <div class="header-left">
-            <a href="{{ route('dashboard') }}">
-                <img id="logo_header_mobile" alt="Mursalin Ecommerce" src="{{ asset('assets/images/logo/logo.png') }}"
-                     data-light="{{ asset('assets/images/logo/logo.png') }}"
-                     data-dark="{{ asset('assets/images/logo/logo-dark.png') }}">
+            <a href="{{ route('dashboard') }}" class="brand">
+                        <span class="brand-mark">C</span>
+                         Carto
             </a>
             <div class="button-show-hide"><i class="icon-menu-left"></i></div>
             <form class="form-search flex-grow" action="{{ route('products.index') }}" method="GET">

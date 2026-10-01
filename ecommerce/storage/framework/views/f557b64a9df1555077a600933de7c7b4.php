@@ -1,10 +1,9 @@
 <div class="section-menu-left">
     <div class="box-logo">
-        <a href="<?php echo e(route('dashboard')); ?>" id="site-logo-inner">
-            <img id="logo_header" alt="Mursalin Ecommerce" src="<?php echo e(asset('assets/images/logo/logo.png')); ?>"
-                 data-light="<?php echo e(asset('assets/images/logo/logo.png')); ?>"
-                 data-dark="<?php echo e(asset('assets/images/logo/logo-dark.png')); ?>">
-        </a>
+            <a href="<?php echo e(route('dashboard')); ?>" class="brand">
+                        <span class="brand-mark">C</span>
+                         Carto
+            </a>
         <div class="button-show-hide"><i class="icon-menu-left"></i></div>
     </div>
 

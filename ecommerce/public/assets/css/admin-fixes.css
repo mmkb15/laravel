@@ -1,5 +1,101 @@
 /* Remos-compatible admin refinements for the Mursalin single-store ecommerce panel. */
 
+
+/* =============================================================
+   SPRYLO — Tech &amp; Gadgets Ecommerce HTML Template
+   White surface · indigo primary · multi-color bento product cards
+   ============================================================= */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* surfaces */
+  --paper:        #FFFFFF;
+  --bg:           #F8FAFC;
+  --bg-soft:      #F1F5F9;
+  --bg-deep:      #E2E8F0;
+
+  /* ink */
+  --ink:          #0F172A;
+  --ink-soft:     #334155;
+  --ink-mute:     #64748B;
+  --ink-faint:    #94A3B8;
+
+  /* primary indigo */
+  --indigo:       #4F46E5;
+  --indigo-deep:  #3730A3;
+  --indigo-soft:  #EEF2FF;
+  --indigo-line:  #C7D2FE;
+
+  /* card colors (multi-color bento) */
+  --card-blue:    #1E2A78;
+  --card-blue-2:  #2B3FB7;
+  --card-purple:  #7C3AED;
+  --card-purple-2:#C026D3;
+  --card-orange:  #F97316;
+  --card-orange-2:#EA580C;
+  --card-green:   #16A34A;
+  --card-green-2: #15803D;
+  --card-black:   #0A0A0A;
+
+  /* support */
+  --rose:         #E11D48;
+  --emerald:      #10B981;
+  --amber:        #F59E0B;
+  --rule:         #E2E8F0;
+  --rule-strong:  #CBD5E1;
+
+  /* semantic */
+  --accent:       var(--indigo);
+  --accent-deep:  var(--indigo-deep);
+  --accent-soft:  var(--indigo-soft);
+  --fg:           var(--ink);
+  --fg-soft:      var(--ink-soft);
+  --fg-mute:      var(--ink-mute);
+
+  /* type */
+  --ff-display:   'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ff-body:      'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ff-mono:      'Roboto Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-xs:      12px;
+  --text-sm:      13px;
+  --text-base:    15px;
+  --text-md:      17px;
+  --text-lg:      20px;
+  --text-xl:      24px;
+  --text-2xl:     32px;
+  --text-3xl:     40px;
+  --text-display: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
+  --text-hero:    clamp(2rem, 1.2rem + 3vw, 3.75rem);
+
+  /* spacing */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px;
+  --s6: 28px; --s7: 40px; --s8: 56px; --s9: 80px; --s10: 112px;
+
+  /* layout */
+  --container:    1280px;
+  --container-pad: 24px;
+
+  /* radii */
+  --r-sm: 6px;
+  --r:    14px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+
+  /* shadow */
+  --shadow-sm:   0 1px 2px rgba(15,23,42,0.06);
+  --shadow:      0 6px 18px -8px rgba(15,23,42,0.16), 0 2px 4px -2px rgba(15,23,42,0.06);
+  --shadow-lg:   0 24px 60px -28px rgba(15,23,42,0.30), 0 8px 16px -10px rgba(15,23,42,0.08);
+  --shadow-indigo: 0 12px 28px -10px rgba(79,70,229,0.35);
+
+  /* motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+
+
+
 .ecom-page-header {
     margin-bottom: 24px;
 }
@@ -1614,4 +1710,24 @@ select#status {
 .field-hint.is-warning {
     color: #e5402a;
     font-weight: 600;
+}
+
+
+
+
+/* Extra for logo */
+.brand {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-family: var(--ff-display);
+  font-weight: 800; font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.brand-mark {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--indigo), var(--card-purple) 70%);
+  display: inline-grid; place-items: center;
+  color: var(--paper); font-weight: 800; font-size: 18px;
+  box-shadow: var(--shadow-indigo);
 }

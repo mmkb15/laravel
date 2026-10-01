@@ -1,10 +1,9 @@
 <div class="header-dashboard">
     <div class="wrap">
         <div class="header-left">
-            <a href="<?php echo e(route('dashboard')); ?>">
-                <img id="logo_header_mobile" alt="Mursalin Ecommerce" src="<?php echo e(asset('assets/images/logo/logo.png')); ?>"
-                     data-light="<?php echo e(asset('assets/images/logo/logo.png')); ?>"
-                     data-dark="<?php echo e(asset('assets/images/logo/logo-dark.png')); ?>">
+            <a href="<?php echo e(route('dashboard')); ?>" class="brand">
+                        <span class="brand-mark">C</span>
+                         Carto
             </a>
             <div class="button-show-hide"><i class="icon-menu-left"></i></div>
             <form class="form-search flex-grow" action="<?php echo e(route('products.index')); ?>" method="GET">
