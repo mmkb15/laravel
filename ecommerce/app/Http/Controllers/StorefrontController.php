@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Illuminate\Support\Collection;
 
 class StorefrontController extends Controller
 {
@@ -112,82 +112,36 @@ class StorefrontController extends Controller
 
     public function cart(): View
     {
-        $cartItems = $this->cartItems();
-
-        return view('frontend.pages.cart-page', [
-            'cartItems' => $cartItems,
-            'subtotal' => $cartItems->sum('subtotal'),
-        ]);
+        return view('frontend.pages.cart-page');
     }
 
-    public function addToCart(Request $request, Product $product): RedirectResponse
-    {
-        abort_unless($product->status === 'active', 404);
-
-        $data = $request->validate(['quantity' => 'required|integer|min:1']);
-        $cart = $request->session()->get('cart', []);
-        $newQuantity = ($cart[$product->id] ?? 0) + $data['quantity'];
-
-        if ($newQuantity > $product->stock) {
-            throw ValidationException::withMessages([
-                'quantity' => "Only {$product->stock} unit(s) of {$product->name} are available.",
-            ]);
-        }
-
-        $cart[$product->id] = $newQuantity;
-        $request->session()->put('cart', $cart);
-
-        return redirect()->route('cart')->with('success', 'Product added to your cart.');
-    }
-
-    public function updateCart(Request $request, Product $product): RedirectResponse
+    public function cartProducts(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'quantity' => 'required|integer|min:1',
-            'step' => 'nullable|in:increase,decrease',
+            'ids' => 'required|array|max:100',
+            'ids.*' => 'required|integer|distinct',
         ]);
 
-        $cart = $request->session()->get('cart', []);
-        $currentQuantity = (int) ($cart[$product->id] ?? $data['quantity']);
-        $quantity = match ($data['step'] ?? null) {
-            'increase' => $currentQuantity + 1,
-            'decrease' => max(1, $currentQuantity - 1),
-            default => $data['quantity'],
-        };
+        $products = Product::query()
+            ->with('primaryImage')
+            ->where('status', 'active')
+            ->whereIn('id', $data['ids'])
+            ->get(['id', 'name', 'slug', 'image', 'price', 'sale_price', 'stock']);
 
-        if ($product->status !== 'active' || $quantity > $product->stock) {
-            throw ValidationException::withMessages([
-                'quantity' => "The requested quantity for {$product->name} is unavailable.",
-            ]);
-        }
-
-        $cart[$product->id] = $quantity;
-        $request->session()->put('cart', $cart);
-
-        return redirect()->route('cart')->with('success', 'Cart updated.');
+        return response()->json($products->map(fn (Product $product): array => [
+            'id' => $product->id,
+            'name' => $product->name,
+            'slug' => $product->slug,
+            'url' => route('product', $product->slug),
+            'image' => $product->image_url,
+            'price' => (float) ($product->sale_price ?: $product->price),
+            'stock' => $product->stock,
+        ])->values());
     }
 
-    public function removeFromCart(Request $request, Product $product): RedirectResponse
+    public function checkout(): RedirectResponse
     {
-        $cart = $request->session()->get('cart', []);
-        unset($cart[$product->id]);
-        $request->session()->put('cart', $cart);
-
-        return redirect()->route('cart')->with('success', 'Product removed from your cart.');
-    }
-
-    public function checkout(): View|RedirectResponse
-    {
-        $cartItems = $this->cartItems();
-
-        if ($cartItems->isEmpty()) {
-            return redirect()->route('cart')->with('error', 'Add a product to your cart before checkout.');
-        }
-
-        return view('frontend.pages.checkout', [
-            'cartItems' => $cartItems,
-            'subtotal' => $cartItems->sum('subtotal'),
-        ]);
+        return redirect()->route('cart', ['checkout' => 1]);
     }
 
     public function placeOrder(Request $request): RedirectResponse
@@ -198,12 +152,13 @@ class StorefrontController extends Controller
             'shipping_address' => 'required|string|max:5000',
             'payment_method' => 'required|in:cod,bank',
             'notes' => 'nullable|string|max:2000',
+            'items' => 'required|array|min:1|max:100',
+            'items.*.product_id' => 'required|integer|distinct|exists:products,id',
+            'items.*.quantity' => 'required|integer|min:1',
         ]);
-        $cart = $request->session()->get('cart', []);
-
-        if ($cart === []) {
-            return redirect()->route('cart')->with('error', 'Your cart is empty.');
-        }
+        $cart = collect($data['items'])
+            ->mapWithKeys(fn (array $item): array => [(int) $item['product_id'] => (int) $item['quantity']])
+            ->all();
 
         $order = DB::transaction(function () use ($cart, $data) {
             $products = Product::query()
@@ -262,41 +217,6 @@ class StorefrontController extends Controller
             return $order;
         });
 
-        $request->session()->forget('cart');
-
-        return redirect()->route('cart')->with('success', "Order {$order->order_number} was placed successfully.");
-    }
-
-    private function cartItems(): Collection
-    {
-        $cart = session()->get('cart', []);
-
-        if ($cart === []) {
-            return collect();
-        }
-
-        $products = Product::query()
-            ->with('primaryImage')
-            ->whereIn('id', array_keys($cart))
-            ->where('status', 'active')
-            ->get()
-            ->keyBy('id');
-
-        return collect($cart)
-            ->map(function (int $quantity, string|int $productId) use ($products): ?array {
-                $product = $products->get((int) $productId);
-
-                if (! $product) {
-                    return null;
-                }
-
-                return [
-                    'product' => $product,
-                    'quantity' => $quantity,
-                    'subtotal' => (float) ($product->sale_price ?? $product->price) * $quantity,
-                ];
-            })
-            ->filter()
-            ->values();
+        return redirect()->route('cart', ['ordered' => 1])->with('success', "Order {$order->order_number} was placed successfully.");
     }
 }

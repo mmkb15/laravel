@@ -1564,6 +1564,52 @@ input, select, textarea { font: inherit; color: inherit; }
   margin-top: 0;
 }
 
+.cart-empty {
+  padding: var(--s6);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  background: var(--paper);
+}
+
+.cart-empty h2 {
+  margin-bottom: var(--s2);
+  font-size: var(--text-xl);
+}
+
+.cart-empty p {
+  margin-bottom: var(--s4);
+  color: var(--fg-soft);
+}
+
+.cart-message {
+  margin-bottom: var(--s4);
+  padding: var(--s3) var(--s4);
+  border-radius: var(--r-sm);
+  background: var(--indigo-soft);
+  color: var(--indigo-deep);
+  font-size: var(--text-sm);
+}
+
+.checkout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  align-items: center;
+}
+
+.checkout-actions .btn {
+  min-height: 48px;
+}
+
+.checkout-actions .btn--indigo {
+  flex: 1 1 220px;
+}
+
+.cart-layout[hidden],
+.checkout-single-page[hidden] {
+  display: none !important;
+}
+
 @media (max-width: 960px) {
   .checkout-layout {
     grid-template-columns: 1fr;

@@ -60,25 +60,13 @@ it('shows active products and categories on the storefront homepage', function (
         ->assertDontSeeText('Hidden Category');
 });
 
-it('adds available products to the session cart', function () {
-    $category = Category::create([
-        'name' => 'Cart Category',
-        'slug' => 'cart-category',
-        'status' => 'active',
-    ]);
-    $product = Product::create([
-        'name' => 'Cart Headphones',
-        'slug' => 'cart-headphones',
-        'category_id' => $category->id,
-        'sku' => 'CART-001',
-        'price' => 1500,
-        'stock' => 5,
-        'status' => 'active',
-    ]);
-
-    $this->post(route('cart.add', $product->slug), ['quantity' => 2])
-        ->assertRedirect(route('cart'))
-        ->assertSessionHas('cart', [$product->id => 2]);
+it('renders the browser-backed cart and inline checkout views', function () {
+    $this->get(route('cart'))
+        ->assertOk()
+        ->assertSee('data-cart-page', false)
+        ->assertSee('data-cart-items', false)
+        ->assertSee('data-open-checkout', false)
+        ->assertSee('data-checkout-view', false);
 });
 
 it('creates an order and reduces stock at checkout', function () {
@@ -98,14 +86,17 @@ it('creates an order and reduces stock at checkout', function () {
         'status' => 'active',
     ]);
 
-    $this->withSession(['cart' => [$product->id => 2]])
-        ->post(route('checkout.store'), [
+    $this->post(route('checkout.store'), [
             'shipping_name' => 'Test Customer',
             'shipping_phone' => '01700000000',
             'shipping_address' => '1 Test Street, Dhaka',
             'payment_method' => 'cod',
+            'items' => [[
+                'product_id' => $product->id,
+                'quantity' => 2,
+            ]],
         ])
-        ->assertRedirect(route('cart'));
+        ->assertRedirect(route('cart', ['ordered' => 1]));
 
     $this->assertDatabaseHas('orders', [
         'shipping_name' => 'Test Customer',

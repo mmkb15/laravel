@@ -18,7 +18,7 @@
         </a>
         <a href="{{ route('cart') }}" class="icon-btn icon-btn--cart" aria-label="Cart">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l-2 5v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-2-5z"/><path d="M4 7h16"/><path d="M16 11a4 4 0 0 1-8 0"/></svg>
-          <span class="count">{{ array_sum(session('cart', [])) }}</span>
+          <span class="count" data-cart-count>0</span>
         </a>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">≡</button>
       </div>

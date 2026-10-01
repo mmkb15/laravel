@@ -60,17 +60,16 @@
         </div>
 
         @if ($product->stock > 0)
-          <form method="POST" action="{{ route('cart.add', $product->slug) }}" class="pdp-cta">
-            @csrf
+          <div class="pdp-cta" data-product-purchase data-product-id="{{ $product->id }}">
             <div class="qty">
               <button type="button" data-act="-" aria-label="Decrease quantity">−</button>
               <label class="sr-only" for="product-quantity">Quantity</label>
               <input id="product-quantity" type="text" name="quantity" value="1" inputmode="numeric" pattern="[0-9]*" min="1" max="{{ $product->stock }}" required>
               <button type="button" data-act="+" aria-label="Increase quantity">+</button>
             </div>
-            <button type="submit" class="btn btn--indigo" style="flex:1; min-width:160px">Add to cart</button>
+            <button type="button" class="btn btn--indigo" data-add-to-cart style="flex:1; min-width:160px">Add to cart</button>
             <a href="{{ route('shop') }}" class="btn btn--ink">Continue shopping</a>
-          </form>
+          </div>
         @else
           <p role="status">This product is currently unavailable.</p>
         @endif

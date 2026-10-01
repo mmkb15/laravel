@@ -127,11 +127,7 @@
                   <span class="was">&#2547;{{ number_format((float) $product->price, 2) }}</span>
                 @endif
               </div>
-              <form method="POST" action="{{ route('cart.add', $product->slug) }}">
-                @csrf
-                <input type="hidden" name="quantity" value="1">
-                <button class="btn" type="submit">Add to cart →</button>
-              </form>
+              <button class="btn" type="button" data-add-to-cart data-product-id="{{ $product->id }}">Add to cart →</button>
             </article>
           @empty
             <p>No products are available right now.</p>

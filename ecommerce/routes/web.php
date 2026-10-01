@@ -11,9 +11,7 @@ Route::get('/contact', function () {
 Route::get('/shop', [StorefrontController::class, 'shop'])->name('shop');
 Route::get('/product/{product:slug}', [StorefrontController::class, 'show'])->name('product');
 Route::get('/cart', [StorefrontController::class, 'cart'])->name('cart');
-Route::post('/cart/{product:slug}', [StorefrontController::class, 'addToCart'])->name('cart.add');
-Route::put('/cart/{product:slug}', [StorefrontController::class, 'updateCart'])->name('cart.update');
-Route::delete('/cart/{product:slug}', [StorefrontController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/cart/products', [StorefrontController::class, 'cartProducts'])->name('cart.products');
 Route::get('/checkout', [StorefrontController::class, 'checkout'])->name('checkout');
 Route::post('/checkout', [StorefrontController::class, 'placeOrder'])->name('checkout.store');
 

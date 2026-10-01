@@ -127,11 +127,7 @@
                   <span class="was">&#2547;<?php echo e(number_format((float) $product->price, 2)); ?></span>
                 <?php endif; ?>
               </div>
-              <form method="POST" action="<?php echo e(route('cart.add', $product->slug)); ?>">
-                <?php echo csrf_field(); ?>
-                <input type="hidden" name="quantity" value="1">
-                <button class="btn" type="submit">Add to cart →</button>
-              </form>
+              <button class="btn" type="button" data-add-to-cart data-product-id="<?php echo e($product->id); ?>">Add to cart →</button>
             </article>
           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <p>No products are available right now.</p>

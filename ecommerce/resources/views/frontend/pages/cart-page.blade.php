@@ -8,87 +8,94 @@
     <div class="container">
       <div class="crumbs"><a href="{{ route('home') }}">Home</a> <span class="sep">›</span> <span>Shopping cart</span></div>
       <h1>Your cart</h1>
-      <p>{{ $cartItems->sum('quantity') }} item(s) in your cart.</p>
+      <p data-cart-item-count>0 items in your cart.</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container">
+    <div class="container" data-cart-page data-products-url="{{ route('cart.products') }}" data-show-checkout="{{ $errors->any() ? '1' : '0' }}">
       @if (session('success'))
         <p role="status">{{ session('success') }}</p>
       @endif
-      @if (session('error'))
-        <p role="alert">{{ session('error') }}</p>
-      @endif
-      @if ($errors->any())
-        <div role="alert">
-          @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-          @endforeach
+      <p class="cart-message" role="alert" data-cart-message hidden></p>
+
+      <div class="cart-layout" data-cart-view>
+        <div>
+          <div class="cart-list" data-cart-items></div>
+          <div class="cart-empty" data-cart-empty hidden>
+            <h2>Your cart is empty</h2>
+            <p>Browse the catalog and add something you like.</p>
+            <a href="{{ route('shop') }}" class="btn btn--indigo">Browse products</a>
+          </div>
+          <div style="margin-top: var(--s5)">
+            <a href="{{ route('shop') }}" class="btn btn--ghost">Continue shopping</a>
+          </div>
         </div>
-      @endif
 
-      @if ($cartItems->isEmpty())
-        <div class="cart-summary">
-          <h2>Your cart is empty</h2>
-          <p>Browse the catalog and add something you like.</p>
-          <a href="{{ route('shop') }}" class="btn btn--indigo">Browse products</a>
-        </div>
-      @else
-        <div class="cart-layout">
-          <div>
-            <div class="cart-list">
-              @foreach ($cartItems as $item)
-                @php($product = $item['product'])
-                <article class="cart-row">
-                  <div class="pic"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></div>
-                  <div class="info">
-                    <a class="name" href="{{ route('product', $product->slug) }}">{{ $product->name }}</a>
-                    <div class="variant">
-                      @if ($product->stock > 0)
-                        {{ $product->stock }} available
-                      @else
-                        Currently out of stock
-                      @endif
-                    </div>
-                  </div>
+        <aside class="cart-summary" data-cart-summary>
+          <h2>Order summary</h2>
+          <div class="cart-line"><span>Subtotal</span><span data-cart-subtotal>৳0.00</span></div>
+          <div class="cart-line"><span>Shipping</span><span>Calculated at checkout</span></div>
+          <div class="cart-line is-total"><span>Total</span><span data-cart-total>৳0.00</span></div>
+          <button type="button" class="btn btn--indigo btn--block" data-open-checkout>Proceed to checkout</button>
+        </aside>
+      </div>
 
-                  @if ($product->stock > 0)
-                    <form class="qty cart-quantity" method="POST" action="{{ route('cart.update', $product->slug) }}">
-                      @csrf
-                      @method('PUT')
-                      <button type="submit" name="step" value="decrease" data-act="-" aria-label="Decrease quantity for {{ $product->name }}" @disabled($item['quantity'] <= 1)>−</button>
-                      <input type="text" name="quantity" value="{{ $item['quantity'] }}" inputmode="numeric" pattern="[0-9]*" min="1" max="{{ $product->stock }}" aria-label="Quantity for {{ $product->name }}" required>
-                      <button type="submit" name="step" value="increase" data-act="+" aria-label="Increase quantity for {{ $product->name }}" @disabled($item['quantity'] >= $product->stock)>+</button>
-                    </form>
-                  @else
-                    <span>Qty {{ $item['quantity'] }}</span>
-                  @endif
-
-                  <span class="subtotal">&#2547;{{ number_format($item['subtotal'], 2) }}</span>
-                  <form method="POST" action="{{ route('cart.remove', $product->slug) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button class="remove" type="submit" aria-label="Remove {{ $product->name }}">×</button>
-                  </form>
-                </article>
-              @endforeach
+      <section class="checkout-layout checkout-single-page" data-checkout-view hidden>
+        <form method="POST" action="{{ route('checkout.store') }}" class="contact-form checkout-form" data-checkout-form>
+          @csrf
+          @if ($errors->any())
+            <div role="alert" class="checkout-errors">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
             </div>
+          @endif
 
-            <div style="margin-top: var(--s5)">
-              <a href="{{ route('shop') }}" class="btn btn--ghost">Continue shopping</a>
+          <h2 class="checkout-section-title">Delivery details</h2>
+          <div class="field-row">
+            <div class="field">
+              <label for="shipping-name">Full name</label>
+              <input id="shipping-name" name="shipping_name" value="{{ old('shipping_name') }}" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="shipping-phone">Phone number</label>
+              <input id="shipping-phone" name="shipping_phone" value="{{ old('shipping_phone') }}" autocomplete="tel" required>
             </div>
           </div>
 
-          <aside class="cart-summary">
-            <h2>Order summary</h2>
-            <div class="cart-line"><span>Subtotal</span><span>&#2547;{{ number_format($subtotal, 2) }}</span></div>
-            <div class="cart-line"><span>Shipping</span><span>Calculated at checkout</span></div>
-            <div class="cart-line is-total"><span>Total</span><span>&#2547;{{ number_format($subtotal, 2) }}</span></div>
-            <a href="{{ route('checkout') }}" class="btn btn--indigo btn--block">Proceed to checkout</a>
-          </aside>
-        </div>
-      @endif
+          <div class="field">
+            <label for="shipping-address">Delivery address</label>
+            <textarea id="shipping-address" name="shipping_address" rows="4" autocomplete="street-address" required>{{ old('shipping_address') }}</textarea>
+          </div>
+
+          <div class="field">
+            <label for="order-notes">Order notes (optional)</label>
+            <textarea id="order-notes" name="notes" rows="3">{{ old('notes') }}</textarea>
+          </div>
+
+          <div class="field checkout-payment">
+            <div class="checkout-section-title">Payment method</div>
+            <label class="checkout-payment-option"><input type="radio" name="payment_method" value="cod" @checked(old('payment_method', 'cod') === 'cod') required> Cash on delivery</label>
+            <label class="checkout-payment-option"><input type="radio" name="payment_method" value="bank" @checked(old('payment_method') === 'bank')> Bank transfer</label>
+          </div>
+
+          <div data-checkout-items></div>
+          <div class="checkout-actions">
+            <button type="button" class="btn btn--ghost" data-back-to-cart>Back to cart</button>
+            <button class="btn btn--indigo" type="submit">Place order</button>
+          </div>
+        </form>
+
+        <aside class="cart-summary">
+          <h2>Order summary</h2>
+          <div data-checkout-summary></div>
+          <div class="cart-line"><span>Shipping</span><span>Free</span></div>
+          <div class="cart-line is-total"><span>Total</span><span data-checkout-total>৳0.00</span></div>
+        </aside>
+      </section>
     </div>
   </section>
 </main>
