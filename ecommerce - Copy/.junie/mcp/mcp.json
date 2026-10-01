@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "C:\\Users\\CodeGrapes\\.config\\herd\\bin\\php85\\php.exe",
+            "args": [
+                "X:\\New folder 2.0\\WDPF\\WDPF70\\laravel\\ecommerce\\artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}

@@ -93,6 +93,8 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        $this->call(ElectronicsCatalogSeeder::class);
+
         if (Order::count() === 0) {
             $product = Product::first();
             $unit = (float) ($product->sale_price ?: $product->price);
