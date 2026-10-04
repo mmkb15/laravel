@@ -18,6 +18,15 @@ use Illuminate\View\View;
 
 class StorefrontController extends Controller
 {
+    private const HERO_PRODUCT_SLUGS = [
+        'samsung-galaxy-watch-7-18',
+        'aula-win68-he-max-hall-effect-gaming-keyboard-15',
+        'samsung-galaxy-buds3-pro-16',
+        'iphone-18-pro-max-9',
+        'samsung-galaxy-s25-5g-10',
+        'hp-wired-rgb-gaming-mouse-11',
+    ];
+
     public function home(): View
     {
         $products = Product::query()
@@ -36,10 +45,24 @@ class StorefrontController extends Controller
             ->limit(5)
             ->get();
 
+        $brands = Brand::query()
+            ->where('status', 'active')
+            ->whereHas('products', fn (Builder $query) => $query->where('status', 'active'))
+            ->orderBy('name')
+            ->limit(8)
+            ->get(['id', 'name', 'slug', 'image']);
+
+        $heroProducts = $products
+            ->filter(fn (Product $product): bool => in_array($product->slug, self::HERO_PRODUCT_SLUGS, true))
+            ->values();
+
         return view('frontend.pages.home', [
+            'featuredProduct' => $heroProducts->first(),
+            'heroProducts' => $heroProducts->skip(1)->take(5),
             'trendingProducts' => $products,
             'justForYouProducts' => $products->skip(5)->take(4),
             'categories' => $categories,
+            'brands' => $brands,
         ]);
     }
 
@@ -150,7 +173,7 @@ class StorefrontController extends Controller
             'shipping_name' => 'required|string|max:255',
             'shipping_phone' => 'required|string|max:50',
             'shipping_address' => 'required|string|max:5000',
-            'payment_method' => 'required|in:cod,bank',
+            'payment_method' => 'required|in:cod',
             'notes' => 'nullable|string|max:2000',
             'items' => 'required|array|min:1|max:100',
             'items.*.product_id' => 'required|integer|distinct|exists:products,id',

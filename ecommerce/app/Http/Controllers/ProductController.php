@@ -151,10 +151,12 @@ class ProductController extends Controller
             );
         });
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()
+            ->route('products.index', $request->only('page', 'search'))
+            ->with('success', 'Product updated successfully.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Request $request, Product $product)
     {
         $product->load('images');
 
@@ -168,7 +170,9 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return back()->with('success', 'Product deleted successfully.');
+        return redirect()
+            ->route('products.index', $request->only('page', 'search'))
+            ->with('deleted', 'Product deleted successfully.');
     }
 
     private function storeProductImages(Request $request, Product $product): void

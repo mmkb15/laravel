@@ -34,9 +34,9 @@
 
         <aside class="cart-summary" data-cart-summary>
           <h2>Order summary</h2>
-          <div class="cart-line"><span>Subtotal</span><span data-cart-subtotal>৳0.00</span></div>
+          <div class="cart-line"><span>Subtotal</span><span data-cart-subtotal>$0.00</span></div>
           <div class="cart-line"><span>Shipping</span><span>Calculated at checkout</span></div>
-          <div class="cart-line is-total"><span>Total</span><span data-cart-total>৳0.00</span></div>
+          <div class="cart-line is-total"><span>Total</span><span data-cart-total>$0.00</span></div>
           <button type="button" class="btn btn--indigo btn--block" data-open-checkout>Proceed to checkout</button>
         </aside>
       </div>
@@ -77,9 +77,8 @@
           </div>
 
           <div class="field checkout-payment">
-            <div class="checkout-section-title">Payment method</div>
-            <label class="checkout-payment-option"><input type="radio" name="payment_method" value="cod" @checked(old('payment_method', 'cod') === 'cod') required> Cash on delivery</label>
-            <label class="checkout-payment-option"><input type="radio" name="payment_method" value="bank" @checked(old('payment_method') === 'bank')> Bank transfer</label>
+          <div class="checkout-section-title">Payment method</div>
+          <label class="checkout-payment-option"><input type="radio" name="payment_method" value="cod" @checked(old('payment_method', 'cod') === 'cod') required> Cash on delivery</label>
           </div>
 
           <div data-checkout-items></div>
@@ -93,7 +92,7 @@
           <h2>Order summary</h2>
           <div data-checkout-summary></div>
           <div class="cart-line"><span>Shipping</span><span>Free</span></div>
-          <div class="cart-line is-total"><span>Total</span><span data-checkout-total>৳0.00</span></div>
+          <div class="cart-line is-total"><span>Total</span><span data-checkout-total>$0.00</span></div>
         </aside>
       </section>
     </div>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <!-- Smooth gradient matching the image profile -->
+    <linearGradient id="brand-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C54FA" />
+      <stop offset="100%" stop-color="#7B32EC" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background container (36x36 with 10px rounded corners) -->
+  <rect width="36" height="36" rx="10" fill="url(#brand-gradient)" />
+
+  <!-- 
+    Enlarged and optimized Favicon/Logo 'C'
+    Centered precisely at (18, 18).
+    Outer Radius expanded from 7.0px to 8.75px for maximum visibility.
+    Inner Radius balanced at 5.0px to maintain heavy stroke boldness.
+  -->
+  <path d="M 24.19 11.81
+           A 8.75 8.75 0 1 0 24.19 24.19
+           L 21.54 21.54
+           A 5 5 0 1 1 21.54 14.46
+           Z" 
+        fill="#FFFFFF" />
+</svg>

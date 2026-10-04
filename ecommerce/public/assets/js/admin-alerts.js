@@ -32,9 +32,9 @@
         dismiss(button.closest('.ecom-alert'));
     });
 
-    // Success messages fade out on their own; errors stay until dismissed.
+    // Successful messages fade out on their own; errors stay until dismissed.
     document.addEventListener('DOMContentLoaded', function () {
-        var autoHide = document.querySelectorAll('.ecom-alert-success');
+        var autoHide = document.querySelectorAll('.ecom-alert-success, .ecom-alert-deleted');
 
         Array.prototype.forEach.call(autoHide, function (alertEl) {
             window.setTimeout(function () {

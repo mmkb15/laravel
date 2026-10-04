@@ -1520,10 +1520,10 @@ select#status {
 
 .ecom-alert {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 13px 14px 13px 16px;
+    padding: 13px 14px;
     border: 1px solid transparent;
     border-left-width: 3px;
     border-radius: 8px;
@@ -1552,8 +1552,28 @@ select#status {
     min-width: 0;
 }
 
+.ecom-alert-icon {
+    display: grid;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    place-items: center;
+}
+
+.ecom-alert-icon svg,
+.ecom-alert-close svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
 .ecom-alert-text {
-    /* margin-bottom: 10px; */
+    margin: 0;
     font-weight: 500;
 }
 
@@ -1568,19 +1588,25 @@ select#status {
 }
 
 .ecom-alert-close {
-    flex: 0 0 auto;
-    width: 22px;
-    height: 22px;
+    display: grid;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
     padding: 0;
     border: 0;
-    border-radius: 5px;
+    border-radius: 6px;
     background: transparent;
     color: inherit;
-    font-size: 20px;
-    line-height: 1;
+    appearance: none;
     cursor: pointer;
     opacity: .45;
+    place-items: center;
     transition: opacity .15s ease, background-color .15s ease;
+}
+
+.ecom-alert-close svg {
+    width: 16px;
+    height: 16px;
 }
 
 .ecom-alert-close:hover {
@@ -1593,6 +1619,13 @@ select#status {
     border-color: #cfead9;
     border-left-color: #16a34a;
     color: #14663f;
+}
+
+.ecom-alert-deleted {
+    background: #f4f3ff;
+    border-color: #ddd9ff;
+    border-left-color: #6d5ce7;
+    color: #4938b8;
 }
 
 .ecom-alert-error {
@@ -1620,6 +1653,12 @@ select#status {
     background: #10251a;
     border-color: #1f4733;
     color: #8ae0b0;
+}
+
+.dark-theme .ecom-alert-deleted {
+    background: #1d1a35;
+    border-color: #393263;
+    color: #b5aaff;
 }
 
 .dark-theme .ecom-alert-error {

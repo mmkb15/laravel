@@ -95,7 +95,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return back()->with('success', 'User deleted successfully.');
+        return back()->with('deleted', 'User deleted successfully.');
     }
 
     public function profile()

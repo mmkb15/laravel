@@ -43,7 +43,7 @@ class OrderController extends Controller
             'user_id' => 'nullable|exists:users,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'payment_method' => 'required|in:cod,bank',
+            'payment_method' => 'required|in:cod',
             'shipping_name' => 'required|string|max:255',
             'shipping_phone' => 'required|string|max:50',
             'shipping_address' => 'required|string',

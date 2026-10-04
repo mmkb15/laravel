@@ -1,0 +1,62 @@
+@extends('admin.layouts.single')
+
+@section('title', 'Register')
+
+@section('content')
+<div class="wrap-login-page sign-up ecom-auth-page">
+    <div class="flex-grow flex flex-column justify-center gap30">
+        <a href="{{ route('home') }}" class="auth-logo brand admin-brand" aria-label="Carto">
+            <span class="brand-mark">C</span>
+            Carto
+        </a>
+
+        <div class="login-box auth-login-box">
+            <div class="auth-heading">
+                <div class="auth-icon"><i class="icon-user-plus"></i></div>
+                <div>
+                    <h3>Create an account</h3>
+                    <div class="body-text">Create a customer account for your ecommerce system</div>
+                </div>
+            </div>
+
+            <x-alert type="error" class="auth-alert" :messages="$errors->all()" />
+
+            <form class="form-login flex flex-column gap20" method="POST" action="{{ route('register.store') }}">
+                @csrf
+
+                <fieldset class="template-field">
+                    <label for="register-name">Full Name <span class="required">*</span></label>
+                    <input id="register-name" class="template-input" type="text" name="name" value="{{ old('name') }}" placeholder="Enter your full name" autocomplete="name" required>
+                </fieldset>
+
+                <fieldset class="template-field">
+                    <label for="register-email">Email Address <span class="required">*</span></label>
+                    <input id="register-email" class="template-input" type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email address" autocomplete="email" required>
+                </fieldset>
+
+                <fieldset class="template-field">
+                    <label for="register-password">Password <span class="required">*</span></label>
+                    <input id="register-password" class="template-input" type="password" name="password" placeholder="Minimum 8 characters" autocomplete="new-password" required>
+                </fieldset>
+
+                <fieldset class="template-field">
+                    <label for="register-password-confirmation">Confirm Password <span class="required">*</span></label>
+                    <input id="register-password-confirmation" class="template-input" type="password" name="password_confirmation" placeholder="Repeat your password" autocomplete="new-password" required>
+                </fieldset>
+
+                <button class="tf-button w-full" type="submit">
+                    <i class="icon-user-plus"></i>
+                    Create Account
+                </button>
+            </form>
+
+            <div class="body-text text-center">
+                Already have an account?
+                <a href="{{ route('login') }}" class="body-text tf-color">Login Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-tiny">© {{ date('Y') }} | All Rights Reserved. Developed by Mustafa Mursalin Khan (1295365) (WDPF Round-70) as an assignment of ISDB-BISEW IT Scholarship Programme</div>
+</div>
+@endsection

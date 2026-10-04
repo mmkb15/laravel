@@ -54,7 +54,6 @@
                     <div class="template-select">
                         <select id="payment_method" name="payment_method" required>
                             <option value="cod" @selected(old('payment_method') === 'cod')>Cash on Delivery</option>
-                            <option value="bank" @selected(old('payment_method') === 'bank')>Bank Transfer</option>
                         </select>
                     </div>
                 </div>

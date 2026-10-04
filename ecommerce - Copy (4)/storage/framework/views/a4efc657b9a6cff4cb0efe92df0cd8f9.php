@@ -1,0 +1,3 @@
+ <?php $__env->startSection('title','Mursalin Ecommerce'); ?> <?php $__env->startSection('content'); ?><div class="wrap-login-page"><div class="flex-grow flex flex-column justify-center gap30"><div class="login-box text-center"><h3>Mursalin Ecommerce</h3><div class="body-text mb-20">Single-store ecommerce administration panel</div><a href="<?php echo e(auth()->check()?route('dashboard'):route('login')); ?>" class="tf-button">Open Admin Panel</a></div></div></div><?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.single', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH G:\Mursalin_1295365\Laravel\ecommerce\resources\views\welcome.blade.php ENDPATH**/ ?>

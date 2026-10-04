@@ -93,6 +93,6 @@ class BrandController extends Controller
 
         $brand->delete();
 
-        return back()->with('success', 'Brand deleted successfully.');
+        return back()->with('deleted', 'Brand deleted successfully.');
     }
 }
