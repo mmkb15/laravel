@@ -73,10 +73,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->role_id == 5) {
-            abort(403);
-            exit;
-        }
+        // if (Auth::user()->role_id == 5) {
+        //     abort(403);
+        //     exit;
+        // }
         // dd($request->all());
         $request->validate([
             'name'                  => 'required|min:3|max:100',
@@ -105,13 +105,19 @@ class UserController extends Controller
 
         // if ($user) {
         if ($user->save()) {
-            return redirect()
-                ->route('users.index')
-                ->with('success', 'User created successfully');
+            // return redirect()
+            //     ->route('users.index')
+            //     ->with('success', 'User created successfully');
+            return response()->json([
+                'success' => 'User created successfully'
+            ]);
         } else {
-            return redirect()
-                ->route('users.create')
-                ->with('error', 'User not created');
+            // return redirect()
+            //     ->route('users.create')
+            //     ->with('error', 'User not created');
+            return response()->json([
+                'error' => 'User not created. Try again later.'
+            ], 500);
         }
     }
 
@@ -121,16 +127,29 @@ class UserController extends Controller
     public function show(string $id)
     {
         // dd($id);
-        if (Auth::user()->role_id == 5 && Auth::user()->id != $id) {
-            abort(403);
-            exit;
-        }
+        // if (Auth::user()->role_id == 5 && Auth::user()->id != $id) {
+        //     abort(403);
+        //     exit;
+        // }
         $user = User::join('roles as r', 'users.role_id', '=', 'r.id')
             ->where('users.id', $id)
             ->select('users.id', 'users.name', 'users.email', 'r.name as role')
             ->first();
         // dd($user);
-        return view('admin.pages.user.show', ['user' => $user]);
+        // return view('admin.pages.user.show', ['user' => $user]);
+
+        if($user){
+            return response()->json([
+                'success' => true,
+                'user'    => $user
+            ]);
+
+        }else{
+            return response()->json([
+                'error' => true,
+                'message' => 'User not found'
+            ], 404);
+        }
     }
 
     /**
@@ -156,10 +175,10 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (Auth::user()->role_id == 5 && Auth::user()->id != $id) {
-            abort(403);
-            exit;
-        }
+        // if (Auth::user()->role_id == 5 && Auth::user()->id != $id) {
+        //     abort(403);
+        //     exit;
+        // }
         // dd($request->all());
         $request->validate([
             'name'                  => 'required|min:3|max:100',
@@ -184,24 +203,30 @@ class UserController extends Controller
         if ($user) {
             $role = Role::find($request->role_id);
             $user = User::find($id);
-            $userData = [
-                'id'        => $user->id,
-                'name'      => $user->name,
-                'email'     => $user->email,
-                'role'      => $role->name,
-                'updated'   => $user->updated_at
-            ];
+            // $userData = [
+            //     'id'        => $user->id,
+            //     'name'      => $user->name,
+            //     'email'     => $user->email,
+            //     'role'      => $role->name,
+            //     'updated'   => $user->updated_at
+            // ];
             // $userData = (object) $userData;     // PHP object convertion
-            $userData = new Fluent($userData);  // Laravel object convertion
+            // $userData = new Fluent($userData);  // Laravel object convertion
             // dd($userData);
-            Mail::to($request->email)->send(new ProfileUpdateMail($userData));
-            return redirect()
-                ->route('users.index')
-                ->with('success', 'User updated successfully! A notification email has been sent to the user.');
+            // Mail::to($request->email)->send(new ProfileUpdateMail($userData));
+            // return redirect()
+            //     ->route('users.index')
+            //     ->with('success', 'User updated successfully! A notification email has been sent to the user.');
+            return response()->json([
+                'success' => 'User updated successfully! A notification email has been sent to the user.'
+            ]);
         } else {
-            return redirect()
-                ->route('users.edit', $id)
-                ->with('error', 'Something went wrong. User not updated');
+            // return response()->json([
+            //     'error' => 'Something went wrong. User not updated'
+            // ], 500);
+            return response()->json([
+                'error' => 'Something went wrong. User not updated'
+            ], 500);
         }
     }
 
@@ -211,17 +236,25 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         // dd($id);
-        // $user = User::find($id);
         // $user->delete();
-
-        if (Auth::user()->role_id != 1 && Auth::user()->role_id != 2) {
-            abort(403);
-            exit;
-        } else {
-            User::destroy($id);
-            return redirect()
-                ->route('users.index')
-                ->with('success', 'User deleted successfully');
+        
+        // if (Auth::user()->role_id != 1 && Auth::user()->role_id != 2) {
+            //     abort(403);
+            //     exit;
+            // } else {
+                //     User::destroy($id);
+                //     return redirect()
+                //         ->route('users.index')
+                //         ->with('success', 'User deleted successfully');
+                // }
+                
+        $user = User::find($id);
+        if($user) {
+            $user->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'User deleted successfully'
+            ]);
         }
     }
 }

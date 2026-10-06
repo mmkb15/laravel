@@ -77,9 +77,8 @@
           </div>
 
           <div class="field checkout-payment">
-            <div class="checkout-section-title">Payment method</div>
-            <label class="checkout-payment-option"><input type="radio" name="payment_method" value="cod" <?php if(old('payment_method', 'cod') === 'cod'): echo 'checked'; endif; ?> required> Cash on delivery</label>
-            <label class="checkout-payment-option"><input type="radio" name="payment_method" value="bank" <?php if(old('payment_method') === 'bank'): echo 'checked'; endif; ?>> Bank transfer</label>
+          <div class="checkout-section-title">Payment method</div>
+          <label class="checkout-payment-option"><input type="radio" name="payment_method" value="cod" <?php if(old('payment_method', 'cod') === 'cod'): echo 'checked'; endif; ?> required> Cash on delivery</label>
           </div>
 
           <div data-checkout-items></div>
