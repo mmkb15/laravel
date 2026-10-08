@@ -133,7 +133,7 @@ class UserController extends Controller
         // }
         $user = User::join('roles as r', 'users.role_id', '=', 'r.id')
             ->where('users.id', $id)
-            ->select('users.id', 'users.name', 'users.email', 'r.name as role')
+            ->select('users.id', 'users.name', 'users.email','users.role_id', 'r.name as role')
             ->first();
         // dd($user);
         // return view('admin.pages.user.show', ['user' => $user]);
