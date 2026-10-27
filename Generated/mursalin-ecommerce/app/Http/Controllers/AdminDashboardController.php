@@ -1,0 +1,3 @@
+<?php
+namespace App\Http\Controllers; use App\Models\{Product,Category,User,Order}; use Illuminate\Support\Facades\DB;
+class AdminDashboardController extends Controller { public function index(){return view('admin.dashboard',['stats'=>['products'=>Product::count(),'categories'=>Category::count(),'customers'=>User::where('role_id',2)->count(),'orders'=>Order::count(),'pending'=>Order::where('status','Pending')->count(),'completed'=>Order::where('status','Delivered')->count(),'sales'=>Order::where('status','!=','Cancelled')->sum('total_amount')],'recentOrders'=>Order::with('user')->latest('order_date')->limit(8)->get()]);}}

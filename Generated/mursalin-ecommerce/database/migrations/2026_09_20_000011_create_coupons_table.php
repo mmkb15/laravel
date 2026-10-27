@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up():void{Schema::create('coupons',function(Blueprint $t){$t->id('coupon_id');$t->string('code',50)->unique();$t->enum('discount_type',['Fixed','Percentage']);$t->decimal('discount_value',10,2);$t->decimal('min_order_amount',10,2)->default(0);$t->date('expiry_date');$t->boolean('is_active')->default(true);$t->integer('usage_limit')->nullable();$t->integer('used_count')->default(0);});} public function down():void{Schema::dropIfExists('coupons');}};

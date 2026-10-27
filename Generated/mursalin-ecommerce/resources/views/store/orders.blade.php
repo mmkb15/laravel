@@ -1,0 +1,2 @@
+@extends('store.layout') @section('title','My Orders') @section('content')
+<h2>My Orders</h2><div class="table-responsive mt-3"><table class="table bg-white"><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th><th></th></tr>@forelse($orders as $o)<tr><td>{{$o->order_number}}</td><td>{{$o->order_date?->format('d M Y')}}</td><td>৳ {{$o->total_amount}}</td><td>{{$o->status}}</td><td><a href="{{route('orders.show',$o)}}">View</a></td></tr>@empty<tr><td colspan="5">No orders yet.</td></tr>@endforelse</table></div>{{$orders->links()}}@endsection

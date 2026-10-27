@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up():void{Schema::create('reviews',function(Blueprint $t){$t->id('review_id');$t->foreignId('user_id')->constrained('users','user_id')->cascadeOnDelete();$t->foreignId('product_id')->constrained('products','product_id')->cascadeOnDelete();$t->unsignedTinyInteger('rating');$t->text('comment')->nullable();$t->timestamp('created_at')->useCurrent();$t->unique(['user_id','product_id']);});} public function down():void{Schema::dropIfExists('reviews');}};

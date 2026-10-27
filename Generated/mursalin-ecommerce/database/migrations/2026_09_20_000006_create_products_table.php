@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up():void{Schema::create('products',function(Blueprint $t){$t->id('product_id');$t->foreignId('category_id')->constrained('categories','category_id');$t->foreignId('brand_id')->nullable()->constrained('brands','brand_id')->nullOnDelete();$t->string('name',150);$t->string('slug',200)->unique();$t->text('description')->nullable();$t->boolean('is_active')->default(true);$t->timestamp('created_at')->useCurrent();$t->timestamp('updated_at')->nullable();$t->index(['category_id','brand_id','is_active']);});} public function down():void{Schema::dropIfExists('products');}};

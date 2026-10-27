@@ -1,0 +1,33 @@
+তোমার existing app/Models/User.php ফাইলে এই জিনিসগুলো যোগ করো:
+
+1. $fillable এ 'role_id' যোগ করো:
+   protected $fillable = [
+       'role_id', 'name', 'email', 'password',
+   ];
+
+2. নিচের relationship methods class এর ভিতরে যোগ করো:
+
+    public function role()
+    {
+        return $this->belongsTo(\App\Models\Role::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(\App\Models\Address::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(\App\Models\Review::class);
+    }
+
+    public function wishlists()
+    {
+        return $this->hasMany(\App\Models\Wishlist::class);
+    }

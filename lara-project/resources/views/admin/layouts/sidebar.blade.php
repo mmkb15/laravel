@@ -1,0 +1,146 @@
+<!-- Custom Function to add active class to the current route -->
+  @php
+    function activeLink($route_name){
+        return request()->routeIs($route_name) ? 'active' : '';
+    }
+  @endphp
+  
+  
+  <div class="sidebar-wrapper" id="sidebar">
+      <!-- Brand Logo / Identity -->
+      <a href="index.html" class="sidebar-brand">
+          <i class="bi bi-asterisk"></i>
+          <span>Spark Admin</span>
+      </a>
+
+      <!-- Navigation Menu -->
+
+    @if (auth()->user()->role_id != 5)
+        <!-- Group  -->
+        <div class="flex-grow-1 overflow-y-auto">
+            <!-- Group: Menu -->
+            <div class="sidebar-menu-section">
+                <div class="sidebar-menu-title">Menu</div>
+                <ul class="sidebar-menu-list">
+                    <li class="sidebar-menu-item">
+                        <a href="{{ route('dashboard') }}" 
+                            class="sidebar-menu-link {{ activeLink('dashboard') }}" 
+                            id="menu-overview" 
+                            title="Overview">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Group: Components -->
+            <div class="sidebar-menu-section">
+                <div class="sidebar-menu-title">System</div>
+                <ul class="sidebar-menu-list">
+                    <li class="sidebar-menu-item">
+                        <a href="{{ route('users.index') }}" 
+                        class="sidebar-menu-link {{ activeLink('users*') }}" 
+                        id="menu-basictables" 
+                        title="Basic Tables">
+                            <i class="bi bi-person"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a href="{{ route('roles.index') }}" 
+                        class="sidebar-menu-link {{ activeLink('roles*') }}" 
+                        id="menu-basictables" 
+                        title="Basic Tables">
+                            <i class="bi bi-shield"></i>
+                            <span>Roles</span>
+                        </a>
+                    </li>
+
+                    @if (auth()->user()->role_id != 5)
+                    <li class="sidebar-menu-item">
+                        <a href="{{ route('products.index') }}" 
+                        class="sidebar-menu-link {{ activeLink('products*') }}" 
+                        id="menu-uiforms" 
+                        title="Forms and Input">
+                            <i class="bi bi-input-cursor-text"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    @endif
+                </ul>
+            </div>
+
+            <!-- Group: Pages -->
+            <div class="sidebar-menu-section">
+                <div class="sidebar-menu-title">Pages</div>
+                <ul class="sidebar-menu-list">
+                    <li class="sidebar-menu-item">
+                        <a href="page-login.html" class="sidebar-menu-link" id="menu-loginpage" title="Login Page">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Login Screen</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a href="page-404.html" class="sidebar-menu-link" id="menu-404" title="404 Page">
+                            <i class="bi bi-slash-circle"></i>
+                            <span>Error 404</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    @else
+        <!-- Guest  -->
+        {{-- <div class="sidebar-menu-section">
+            <ul class="sidebar-menu-list">
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('users.show', ['user' => auth()->user()->id]) }}" 
+                    class="sidebar-menu-link {{ activeLink('users.show', ['user' => auth()->user()->id]) }}" 
+                    id="menu-basictables" 
+                    title="Basic Tables">
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div> --}}
+        <div class="sidebar-menu-section">
+            <ul class="sidebar-menu-list">
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('users.show', ['user' => auth()->user()->id]) }}" 
+                    class="sidebar-menu-link {{ activeLink('users.show', ['user' => auth()->user()->id]) }}" 
+                    id="menu-basictables" 
+                    title="Basic Tables">
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ route('users.edit', ['user' => auth()->user()->id]) }}" 
+                    class="sidebar-menu-link {{ activeLink('users.edit', ['user' => auth()->user()->id]) }}" 
+                    id="menu-basictables" 
+                    title="Basic Tables">
+                        <i class="bi bi-pen"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+    @endif
+
+      <!-- Sidebar Profile Card (Dynamic Footer) -->
+      <div class="sidebar-profile">
+          <img src="{{ asset('assets/images/avatar.png') }}" alt="Administrator" class="sidebar-profile-img"
+              onerror="{{ ("this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'") }}">
+          <div class="sidebar-profile-info">
+              <div class="sidebar-profile-name">{{ auth()->user()->name }}</div>
+              <div class="sidebar-profile-email">{{ auth()->user()->email }}</div>
+          </div>
+      </div>
+  </div>
+
+  {{-- {{ dd(auth()->user()) }} --}}
