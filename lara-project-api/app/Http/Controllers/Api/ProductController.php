@@ -45,6 +45,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // if($request->active) {
+        //     return response()->json($request->active);
+        // }else{
+        //     return response()->json("image not found");
+        // }
+
         $validated = $request->validate([
             'name'          => 'required|min:3',
             'price'         => 'required|numeric',
@@ -53,9 +59,11 @@ class ProductController extends Controller
             'description'   => 'required|string',
             'category_id'   => 'required|exists:categories,id',
             'brand_id'      => 'required|exists:brands,id',
-            'active'        => 'boolean',
+            // 'active'        => 'boolean',
             'image'         => 'image|mimes:jpeg,png,jpg|max:500',
         ]);
+
+
 
         if ($request->hasFile('image')) {
             $validated['image'] = UploadImgService::upload($request->image, 'uploads/products');

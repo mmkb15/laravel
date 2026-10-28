@@ -12,7 +12,10 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'success'       => true,
+            'brand'    => Brand::orderBy('name','asc')->get(),
+        ]);
     }
 
     /**
